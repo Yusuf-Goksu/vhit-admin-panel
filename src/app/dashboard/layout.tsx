@@ -5,9 +5,9 @@ import { onAuthStateChanged, signOut } from "firebase/auth";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 
-import { auth } from "@/src/lib/firebase";
-import { getUserProfile, AdminUser } from "@/src/lib/auth";
-import { isAdminRole } from "@/src/lib/roles";
+import { auth } from "@/lib/firebase";
+import { getUserProfile, AdminUser } from "@/lib/auth";
+import { isAdminRole } from "@/lib/roles";
 
 const navLinks = [
   { href: "/dashboard", label: "Dashboard" },

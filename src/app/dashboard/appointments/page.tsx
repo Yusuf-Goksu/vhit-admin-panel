@@ -14,7 +14,7 @@ import {
   where,
 } from "firebase/firestore";
 
-import { db } from "@/src/lib/firebase";
+import { db } from "@/lib/firebase";
 
 type AppointmentStatus = "scheduled" | "completed" | "cancelled";
 

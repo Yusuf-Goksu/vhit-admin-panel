@@ -10,8 +10,8 @@ import {
   query,
 } from "firebase/firestore";
 
-import { db } from "@/src/lib/firebase";
-import TestGraph from "@/src/components/graphs/TestGraph";
+import { db } from "@/lib/firebase";
+import TestGraph from "@/components/graphs/TestGraph";
 
 type TestRecord = {
   id: string;

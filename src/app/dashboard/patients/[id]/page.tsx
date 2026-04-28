@@ -12,8 +12,8 @@ import {
 } from "firebase/firestore";
 import { useParams } from "next/navigation";
 
-import { db } from "@/src/lib/firebase";
-import TestGraph from "@/src/components/graphs/TestGraph";
+import { db } from "@/lib/firebase";
+import TestGraph from "@/components/graphs/TestGraph";
 
 type Patient = {
   id: string;

@@ -4,9 +4,9 @@ import { FormEvent, useState } from "react";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter } from "next/navigation";
 
-import { auth } from "@/src/lib/firebase";
-import { getUserProfile } from "@/src/lib/auth";
-import { isAdminRole } from "@/src/lib/roles";
+import { auth } from "@/lib/firebase";
+import { getUserProfile } from "@/lib/auth";
+import { isAdminRole } from "@/lib/roles";
 
 export default function LoginPage() {
   const router = useRouter();

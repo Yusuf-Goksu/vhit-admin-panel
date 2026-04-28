@@ -12,7 +12,7 @@ import {
 } from "firebase/firestore";
 import Link from "next/link";
 
-import { db } from "@/src/lib/firebase";
+import { db } from "@/lib/firebase";
 
 type DashboardCounts = {
   clinics: number;

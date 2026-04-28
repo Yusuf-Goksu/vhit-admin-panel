@@ -15,7 +15,7 @@ import {
   DocumentData,
 } from "firebase/firestore";
 
-import { auth, db } from "@/src/lib/firebase";
+import { auth, db } from "@/lib/firebase";
 
 const PAGE_SIZE = 25;
 
