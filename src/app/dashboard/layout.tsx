@@ -16,6 +16,7 @@ const navLinks = [
   { href: "/dashboard/tests", label: "Testler" },
   { href: "/dashboard/appointments", label: "Randevular" },
   { href: "/dashboard/clinics", label: "Klinikler" },
+  { href: "/dashboard/feedbacks", label: "Geri Bildirimler" },
 ];
 
 export default function DashboardLayout({ children }: { children: ReactNode }) {
