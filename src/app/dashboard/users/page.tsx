@@ -26,6 +26,7 @@ type Doctor = {
   role: string;
   clinicId: string;
   isActive: boolean;
+  profilePhotoUrl?: string | null;
 };
 
 type ClinicOption = {
@@ -111,6 +112,12 @@ export default function UsersPage() {
           role: data.role ?? "doctor",
           clinicId: data.clinicId ?? "",
           isActive: data.isActive ?? true,
+          profilePhotoUrl:
+            data.profilePhotoUrl ??
+            data.photoUrl ??
+            data.photoURL ??
+            data.profileImageUrl ??
+            null,
         };
       });
 
@@ -371,7 +378,14 @@ export default function UsersPage() {
                 {filteredDoctors.map((doctor) => (
                   <tr key={doctor.id} className="border-t border-slate-100">
                     <td className="px-6 py-4">
-                      <p className="font-semibold">{doctor.fullName || "-"}</p>
+                      <div className="flex items-center gap-3">
+                        <DoctorAvatar doctor={doctor} size="sm" />
+
+                        <div>
+                          <p className="font-semibold">{doctor.fullName || "-"}</p>
+                          <p className="text-xs text-slate-500">{doctor.id}</p>
+                        </div>
+                      </div>
                     </td>
 
                     <td className="px-6 py-4 text-slate-600">{doctor.email}</td>
@@ -508,11 +522,15 @@ export default function UsersPage() {
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4">
           <div className="w-full max-w-lg rounded-2xl bg-white p-6 text-slate-900 shadow-xl">
             <div className="flex items-start justify-between gap-4">
-              <div>
-                <h2 className="text-xl font-bold">Doktor Detayı</h2>
-                <p className="mt-1 text-sm text-slate-500">
-                  Kullanıcı bilgileri ve yönetim işlemleri.
-                </p>
+              <div className="flex items-center gap-4">
+                <DoctorAvatar doctor={selectedDoctor} size="lg" />
+
+                <div>
+                  <h2 className="text-xl font-bold">Doktor Detayı</h2>
+                  <p className="mt-1 text-sm text-slate-500">
+                    Kullanıcı bilgileri ve yönetim işlemleri.
+                  </p>
+                </div>
               </div>
 
               <button
@@ -538,6 +556,10 @@ export default function UsersPage() {
               <InfoRow
                 label="Durum"
                 value={selectedDoctor.isActive ? "Aktif" : "Pasif"}
+              />
+              <InfoRow
+                label="Profil Foto"
+                value={selectedDoctor.profilePhotoUrl ? "Var" : "Yok"}
               />
             </div>
 
@@ -570,4 +592,60 @@ function InfoRow({ label, value }: { label: string; value: string }) {
       <span className="break-all text-slate-900">{value}</span>
     </div>
   );
+}
+
+function DoctorAvatar({
+  doctor,
+  size = "md",
+}: {
+  doctor: Doctor;
+  size?: "sm" | "md" | "lg";
+}) {
+  const sizeClass =
+    size === "lg"
+      ? "h-24 w-24 text-3xl"
+      : size === "sm"
+      ? "h-10 w-10 text-sm"
+      : "h-14 w-14 text-lg";
+
+  const initials = getInitials(doctor.fullName || doctor.email);
+
+  if (doctor.profilePhotoUrl) {
+    return (
+      <div
+        className={`${sizeClass} shrink-0 overflow-hidden rounded-full border border-slate-200 bg-slate-100`}
+      >
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img
+          src={doctor.profilePhotoUrl}
+          alt={doctor.fullName || "Doktor profil fotoğrafı"}
+          className="h-full w-full object-cover"
+          referrerPolicy="no-referrer"
+          onError={(event) => {
+            event.currentTarget.style.display = "none";
+          }}
+        />
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className={`${sizeClass} flex shrink-0 items-center justify-center rounded-full bg-slate-900 font-bold text-white`}
+    >
+      {initials}
+    </div>
+  );
+}
+
+function getInitials(value: string) {
+  const parts = value.trim().split(" ").filter(Boolean);
+
+  if (parts.length === 0) return "?";
+
+  if (parts.length === 1) {
+    return parts[0].slice(0, 2).toUpperCase();
+  }
+
+  return `${parts[0][0]}${parts[parts.length - 1][0]}`.toUpperCase();
 }
