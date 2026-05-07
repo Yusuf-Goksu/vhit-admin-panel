@@ -23,7 +23,6 @@ type TestRecord = {
   graphs: any[];
   metrics: Record<string, number>;
   flags: Record<string, boolean>;
-  summaryText?: string;
   createdAt: any;
 };
 
@@ -87,7 +86,6 @@ export default function TestsPage() {
             graphs: data.graphs ?? [],
             metrics: data.metrics ?? {},
             flags: data.flags ?? {},
-            summaryText: data.summaryText ?? "",
             createdAt: data.createdAt,
           };
         })
@@ -441,12 +439,6 @@ export default function TestsPage() {
             {selectedTest.note && (
               <div className="mt-6 rounded-xl bg-amber-50 p-4 text-sm text-amber-800">
                 <strong>Not:</strong> {selectedTest.note}
-              </div>
-            )}
-
-            {selectedTest.summaryText && (
-              <div className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-700">
-                {selectedTest.summaryText}
               </div>
             )}
 

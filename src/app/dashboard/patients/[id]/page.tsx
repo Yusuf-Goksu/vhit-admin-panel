@@ -32,7 +32,6 @@ type TestRecord = {
   graphs: any[];
   metrics: Record<string, number>;
   flags: Record<string, boolean>;
-  summaryText?: string;
   createdAt: any;
 };
 
@@ -84,7 +83,6 @@ export default function PatientDetailPage() {
             graphs: data.graphs ?? [],
             metrics: data.metrics ?? {},
             flags: data.flags ?? {},
-            summaryText: data.summaryText ?? "",
             createdAt: data.createdAt,
           };
         })
@@ -198,11 +196,6 @@ export default function PatientDetailPage() {
               </button>
             </div>
 
-            {selectedTest.summaryText && (
-              <div className="mt-6 rounded-xl bg-slate-50 p-4 text-sm text-slate-700">
-                {selectedTest.summaryText}
-              </div>
-            )}
 
             <div className="mt-6">
               <h3 className="font-semibold">Metrikler</h3>
