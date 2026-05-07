@@ -239,13 +239,7 @@ export default function PatientDetailPage() {
             <div className="mt-6 space-y-4">
               {selectedTest.graphs?.length ? (
                 selectedTest.graphs.map((graph: any, index: number) => (
-                  <TestGraph
-                    key={index}
-                    title={graph.title}
-                    times={graph.times}
-                    eyeValues={graph.eyeValues}
-                    headValues={graph.headValues}
-                  />
+                 <TestGraph key={index} graph={graph} />
                 ))
               ) : (
                 <p className="text-sm text-slate-500">Grafik verisi yok.</p>

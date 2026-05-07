@@ -347,7 +347,7 @@ export default function TestsPage() {
                 <th>Doktor</th>
                 <th>Klinik</th>
                 <th>Kaynak</th>
-                <th>Grafik</th>
+                <th>Impulse</th>
                 <th></th>
               </tr>
             </thead>
@@ -380,8 +380,7 @@ export default function TestsPage() {
                       </span>
                     </td>
 
-                    <td>{test.graphs.length}</td>
-
+<td>{getTotalImpulseCount(test.graphs)}</td>
                     <td className="p-4">
                       <button
                         onClick={() => setSelectedTest(test)}
@@ -494,13 +493,7 @@ export default function TestsPage() {
             <div className="mt-6 space-y-4">
               {selectedTest.graphs.length ? (
                 selectedTest.graphs.map((graph: any, index: number) => (
-                  <TestGraph
-                    key={index}
-                    title={graph.title}
-                    times={graph.times}
-                    eyeValues={graph.eyeValues}
-                    headValues={graph.headValues}
-                  />
+                  <TestGraph key={index} graph={graph} />
                 ))
               ) : (
                 <div className="rounded-xl bg-slate-50 p-6 text-sm text-slate-500">
@@ -547,4 +540,18 @@ function Info({ label, value }: { label: string; value: string }) {
       <p className="mt-1 font-semibold text-slate-900">{value}</p>
     </div>
   );
+}
+
+function getTotalImpulseCount(graphs: any[]) {
+  return graphs.reduce((total, graph) => {
+    if (typeof graph.impulseCount === "number") {
+      return total + graph.impulseCount;
+    }
+
+    if (Array.isArray(graph.segments)) {
+      return total + graph.segments.length;
+    }
+
+    return total;
+  }, 0);
 }
