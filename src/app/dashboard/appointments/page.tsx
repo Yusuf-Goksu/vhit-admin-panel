@@ -33,7 +33,7 @@ type Appointment = {
 type Patient = {
   id: string;
   fullName: string;
-  patientCode: string;
+  tcKimlikNo: string;
   clinicId: string;
 };
 
@@ -121,7 +121,7 @@ export default function AppointmentsPage() {
           return {
             id: item.id,
             fullName: data.fullName ?? "",
-            patientCode: data.patientCode ?? "",
+            tcKimlikNo: data.tcKimlikNo ?? "",
             clinicId: data.clinicId ?? "",
           };
         })
@@ -210,7 +210,7 @@ export default function AppointmentsPage() {
         appointment.title.toLowerCase().includes(term) ||
         appointment.note.toLowerCase().includes(term) ||
         patient?.fullName?.toLowerCase().includes(term) ||
-        patient?.patientCode?.toLowerCase().includes(term) ||
+        patient?.tcKimlikNo?.toLowerCase().includes(term) ||
         doctor?.fullName?.toLowerCase().includes(term)
       );
     });
@@ -387,7 +387,7 @@ export default function AppointmentsPage() {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Hasta, doktor, başlık veya not ara..."
+            placeholder="Hasta, T.C., doktor, başlık veya not ara..."
             className="rounded-xl border border-slate-300 px-4 py-2 text-sm outline-none focus:border-indigo-500 md:col-span-2"
           />
 
@@ -488,7 +488,7 @@ export default function AppointmentsPage() {
                         {patient?.fullName ?? appointment.patientId}
                       </p>
                       <p className="text-xs text-slate-500">
-                        {patient?.patientCode ?? "-"}
+                        {patient?.tcKimlikNo ?? "-"}
                       </p>
                     </td>
 
@@ -595,7 +595,7 @@ export default function AppointmentsPage() {
                 <option value="">Hasta seç</option>
                 {filteredPatientsForForm.map((patient) => (
                   <option key={patient.id} value={patient.id}>
-                    {patient.fullName} - {patient.patientCode}
+                    {patient.fullName} - {patient.tcKimlikNo}
                   </option>
                 ))}
               </select>

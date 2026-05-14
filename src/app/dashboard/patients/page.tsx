@@ -19,7 +19,7 @@ import { auth, db } from "@/lib/firebase";
 type Patient = {
   id: string;
   clinicId: string;
-  patientCode: string;
+  tcKimlikNo: string;
   fullName: string;
   birthDate: string;
   gender: string;
@@ -35,7 +35,7 @@ type Clinic = {
 
 const emptyForm = {
   fullName: "",
-  patientCode: "",
+  tcKimlikNo: "",
   clinicId: "",
   birthDate: "",
   gender: "",
@@ -86,7 +86,7 @@ export default function PatientsPage() {
           return {
             id: d.id,
             clinicId: data.clinicId ?? "",
-            patientCode: data.patientCode ?? "",
+            tcKimlikNo: data.tcKimlikNo ?? "",
             fullName: data.fullName ?? "",
             birthDate: data.birthDate?.toDate?.()
               ? data.birthDate.toDate().toISOString().slice(0, 10)
@@ -120,7 +120,7 @@ export default function PatientsPage() {
 
       return (
         patient.fullName.toLowerCase().includes(term) ||
-        patient.patientCode.toLowerCase().includes(term) ||
+        patient.tcKimlikNo.toLowerCase().includes(term) ||
         patient.phone.toLowerCase().includes(term)
       );
     });
@@ -136,7 +136,7 @@ export default function PatientsPage() {
     setEditing(patient);
     setForm({
       fullName: patient.fullName,
-      patientCode: patient.patientCode,
+      tcKimlikNo: patient.tcKimlikNo,
       clinicId: patient.clinicId,
       birthDate: patient.birthDate,
       gender: patient.gender,
@@ -162,8 +162,8 @@ export default function PatientsPage() {
       return;
     }
 
-    if (!form.fullName.trim() || !form.patientCode.trim() || !form.clinicId) {
-      alert("Ad soyad, hasta kodu ve klinik zorunludur.");
+    if (!form.fullName.trim() || !form.tcKimlikNo.trim() || !form.clinicId) {
+      alert("Ad soyad, T.C. Kimlik No ve klinik zorunludur.");
       return;
     }
 
@@ -172,7 +172,7 @@ export default function PatientsPage() {
     try {
       const payload = {
         clinicId: form.clinicId,
-        patientCode: form.patientCode.trim(),
+        tcKimlikNo: form.tcKimlikNo.trim(),
         fullName: form.fullName.trim(),
         birthDate: form.birthDate
           ? Timestamp.fromDate(new Date(form.birthDate))
@@ -243,7 +243,7 @@ export default function PatientsPage() {
 
       <div className="mt-6 flex flex-col gap-3 rounded-2xl bg-white p-4 shadow-sm md:flex-row md:items-center">
         <input
-          placeholder="Hasta adı, kodu veya telefon ara..."
+          placeholder="Hasta adı, T.C. veya telefon ara..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           className="w-full rounded-xl border border-slate-300 px-4 py-2 text-sm outline-none focus:border-indigo-500"
@@ -284,7 +284,7 @@ export default function PatientsPage() {
             <thead className="bg-slate-50 text-left text-slate-600">
               <tr>
                 <th className="p-4">Hasta</th>
-                <th>Kod</th>
+                <th>T.C. Kimlik No</th>
                 <th>Klinik</th>
                 <th>Telefon</th>
                 <th>Durum</th>
@@ -309,7 +309,7 @@ export default function PatientsPage() {
                     </p>
                   </td>
 
-                  <td>{patient.patientCode}</td>
+                  <td>{patient.tcKimlikNo}</td>
                   <td>{clinicMap[patient.clinicId] ?? patient.clinicId}</td>
                   <td>{patient.phone || "-"}</td>
 
@@ -370,11 +370,12 @@ export default function PatientsPage() {
               />
 
               <input
-                placeholder="Hasta Kodu"
-                value={form.patientCode}
+                placeholder="T.C. Kimlik No"
+                value={form.tcKimlikNo}
                 onChange={(e) =>
-                  setForm({ ...form, patientCode: e.target.value })
+                  setForm({ ...form, tcKimlikNo: e.target.value })
                 }
+                maxLength={11}
                 className="w-full rounded-xl border border-slate-300 px-4 py-2 text-sm outline-none focus:border-indigo-500"
               />
 

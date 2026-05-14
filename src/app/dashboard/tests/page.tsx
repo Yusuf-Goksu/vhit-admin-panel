@@ -29,7 +29,7 @@ type TestRecord = {
 type Patient = {
   id: string;
   fullName: string;
-  patientCode: string;
+  tcKimlikNo: string;
 };
 
 type Doctor = {
@@ -98,7 +98,7 @@ export default function TestsPage() {
           return {
             id: item.id,
             fullName: data.fullName ?? "",
-            patientCode: data.patientCode ?? "",
+            tcKimlikNo: data.tcKimlikNo ?? "",
           };
         })
       );
@@ -176,7 +176,7 @@ export default function TestsPage() {
 
       return (
         patient?.fullName?.toLowerCase().includes(term) ||
-        patient?.patientCode?.toLowerCase().includes(term) ||
+        patient?.tcKimlikNo?.toLowerCase().includes(term) ||
         doctor?.fullName?.toLowerCase().includes(term) ||
         test.note?.toLowerCase().includes(term)
       );
@@ -251,7 +251,7 @@ export default function TestsPage() {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Hasta, kod, doktor veya not ara..."
+            placeholder="Hasta, T.C., doktor veya not ara..."
             className="rounded-xl border border-slate-300 px-4 py-2 text-sm outline-none focus:border-indigo-500 md:col-span-2"
           />
 
@@ -364,7 +364,7 @@ export default function TestsPage() {
                         {patient?.fullName ?? test.patientId}
                       </p>
                       <p className="text-xs text-slate-500">
-                        {patient?.patientCode ?? "-"}
+                        {patient?.tcKimlikNo ?? "-"}
                       </p>
                     </td>
 

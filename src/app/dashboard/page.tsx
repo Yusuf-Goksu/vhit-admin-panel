@@ -45,7 +45,7 @@ type Appointment = {
 type Patient = {
   id: string;
   fullName: string;
-  patientCode: string;
+  tcKimlikNo: string;
 };
 
 type Doctor = {
@@ -171,7 +171,7 @@ export default function DashboardPage() {
           return {
             id: item.id,
             fullName: data.fullName ?? "",
-            patientCode: data.patientCode ?? "",
+            tcKimlikNo: data.tcKimlikNo ?? "",
           };
         })
       );
@@ -373,20 +373,20 @@ export default function DashboardPage() {
               )}
             </section>
           </div>
-
-          <section className="mt-8 rounded-2xl bg-white p-6 shadow-sm">
-            <h2 className="text-lg font-bold">Hızlı İşlemler</h2>
-
-            <div className="mt-5 grid grid-cols-1 gap-3 md:grid-cols-4">
-              <QuickAction href="/dashboard/clinics" label="Klinik Yönet" />
-              <QuickAction href="/dashboard/users" label="Doktor Yönet" />
-              <QuickAction href="/dashboard/patients" label="Hasta Yönet" />
-              <QuickAction href="/dashboard/appointments" label="Randevu Oluştur" />
-            </div>
-          </section>
         </>
       )}
     </div>
+  );
+}
+
+function isToday(date?: Date) {
+  if (!date) return false;
+
+  const now = new Date();
+  return (
+    date.getFullYear() === now.getFullYear() &&
+    date.getMonth() === now.getMonth() &&
+    date.getDate() === now.getDate()
   );
 }
 
@@ -400,12 +400,9 @@ function StatCard({
   href: string;
 }) {
   return (
-    <Link
-      href={href}
-      className="rounded-2xl bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:shadow-md"
-    >
-      <p className="text-sm font-medium text-slate-500">{title}</p>
-      <p className="mt-3 text-3xl font-bold text-slate-900">{value}</p>
+    <Link href={href} className="rounded-2xl bg-white p-5 shadow-sm hover:shadow-md">
+      <p className="text-sm text-slate-500">{title}</p>
+      <p className="mt-2 text-3xl font-bold text-slate-900">{value}</p>
     </Link>
   );
 }
@@ -422,30 +419,7 @@ function StatusCard({
   return (
     <div className={`rounded-2xl p-5 shadow-sm ${className}`}>
       <p className="text-sm font-medium">{title}</p>
-      <p className="mt-3 text-3xl font-bold">{value}</p>
+      <p className="mt-2 text-3xl font-bold">{value}</p>
     </div>
-  );
-}
-
-function QuickAction({ href, label }: { href: string; label: string }) {
-  return (
-    <Link
-      href={href}
-      className="rounded-xl border border-slate-200 px-4 py-3 text-sm font-semibold text-slate-700 transition hover:border-indigo-300 hover:bg-indigo-50 hover:text-indigo-700"
-    >
-      {label}
-    </Link>
-  );
-}
-
-function isToday(date?: Date) {
-  if (!date) return false;
-
-  const today = new Date();
-
-  return (
-    date.getFullYear() === today.getFullYear() &&
-    date.getMonth() === today.getMonth() &&
-    date.getDate() === today.getDate()
   );
 }
