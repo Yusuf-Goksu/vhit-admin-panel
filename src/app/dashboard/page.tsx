@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import {
+  Timestamp,
   collection,
   getCountFromServer,
   getDocs,
@@ -14,176 +15,195 @@ import Link from "next/link";
 
 import { db } from "@/lib/firebase";
 
-type DashboardCounts = {
+type PlatformCounts = {
   clinics: number;
+  activeClinics: number;
+  users: number;
+  activeUsers: number;
   doctors: number;
   patients: number;
   tests: number;
   appointments: number;
-  scheduledAppointments: number;
-  completedAppointments: number;
-  cancelledAppointments: number;
+  newClinics30d: number;
+  newUsers30d: number;
+  newPatients30d: number;
+  newTests30d: number;
 };
 
-type RecentTest = {
+type Clinic = {
   id: string;
-  patientId: string;
-  doctorId: string;
-  sourceType: string;
+  name: string;
+  email: string;
+  phone: string;
+  isActive: boolean;
   createdAt: any;
 };
 
-type Appointment = {
-  id: string;
-  title: string;
-  patientId: string;
-  doctorId: string;
-  appointmentAt: any;
-  status: string;
-};
-
-type Patient = {
-  id: string;
-  fullName: string;
-  tcKimlikNo: string;
-};
-
-type Doctor = {
+type User = {
   id: string;
   fullName: string;
   email: string;
+  role: string;
+  clinicId: string;
+  isActive: boolean;
+  createdAt: any;
 };
 
+type AdminModule = {
+  title: string;
+  description: string;
+  href: string;
+  badge: string;
+};
+
+const emptyCounts: PlatformCounts = {
+  clinics: 0,
+  activeClinics: 0,
+  users: 0,
+  activeUsers: 0,
+  doctors: 0,
+  patients: 0,
+  tests: 0,
+  appointments: 0,
+  newClinics30d: 0,
+  newUsers30d: 0,
+  newPatients30d: 0,
+  newTests30d: 0,
+};
+
+const adminModules: AdminModule[] = [
+  {
+    title: "Klinik Yönetimi",
+    description: "Hastane / klinik kayıtlarını, aktiflik durumlarını ve iletişim bilgilerini yönetin.",
+    href: "/dashboard/clinics",
+    badge: "Klinikler",
+  },
+  {
+    title: "Kullanıcı Yönetimi",
+    description: "Doktor ve admin hesaplarını, rollerini ve hesap durumlarını kontrol edin.",
+    href: "/dashboard/users",
+    badge: "Kullanıcılar",
+  },
+  {
+    title: "Hasta Veri Havuzu",
+    description: "Klinikler genelindeki hasta kayıtlarını ve veri dağılımını izleyin.",
+    href: "/dashboard/patients",
+    badge: "Hastalar",
+  },
+  {
+    title: "Test Kayıtları",
+    description: "v-HIT test hacmini, kayıt yoğunluğunu ve analiz kayıtlarını takip edin.",
+    href: "/dashboard/tests",
+    badge: "Testler",
+  },
+];
+
 export default function DashboardPage() {
-  const [counts, setCounts] = useState<DashboardCounts>({
-    clinics: 0,
-    doctors: 0,
-    patients: 0,
-    tests: 0,
-    appointments: 0,
-    scheduledAppointments: 0,
-    completedAppointments: 0,
-    cancelledAppointments: 0,
-  });
-
-  const [recentTests, setRecentTests] = useState<RecentTest[]>([]);
-  const [todayAppointments, setTodayAppointments] = useState<Appointment[]>([]);
-  const [patients, setPatients] = useState<Patient[]>([]);
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
-
+  const [counts, setCounts] = useState<PlatformCounts>(emptyCounts);
+  const [recentClinics, setRecentClinics] = useState<Clinic[]>([]);
+  const [recentUsers, setRecentUsers] = useState<User[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
   async function loadDashboard() {
     setIsLoading(true);
 
     try {
-      const doctorsQuery = query(
-        collection(db, "users"),
-        where("role", "==", "doctor")
-      );
+      const thirtyDaysAgo = new Date();
+      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+      const thirtyDaysAgoTimestamp = Timestamp.fromDate(thirtyDaysAgo);
+
+      const usersRef = collection(db, "users");
+      const clinicsRef = collection(db, "clinics");
+      const patientsRef = collection(db, "patients");
+      const testsRef = collection(db, "tests");
+      const appointmentsRef = collection(db, "appointments");
+
+      const doctorsQuery = query(usersRef, where("role", "==", "doctor"));
+      const activeUsersQuery = query(usersRef, where("isActive", "==", true));
+      const activeClinicsQuery = query(clinicsRef, where("isActive", "==", true));
 
       const [
         clinicsSnap,
+        activeClinicsSnap,
+        usersSnap,
+        activeUsersSnap,
         doctorsSnap,
         patientsSnap,
         testsSnap,
         appointmentsSnap,
-        scheduledSnap,
-        completedSnap,
-        cancelledSnap,
-        recentTestsSnap,
-        appointmentsListSnap,
-        patientsListSnap,
-        doctorsListSnap,
+        newClinicsSnap,
+        newUsersSnap,
+        newPatientsSnap,
+        newTestsSnap,
+        recentClinicsSnap,
+        recentUsersSnap,
       ] = await Promise.all([
-        getCountFromServer(collection(db, "clinics")),
+        getCountFromServer(clinicsRef),
+        getCountFromServer(activeClinicsQuery),
+        getCountFromServer(usersRef),
+        getCountFromServer(activeUsersQuery),
         getCountFromServer(doctorsQuery),
-        getCountFromServer(collection(db, "patients")),
-        getCountFromServer(collection(db, "tests")),
-        getCountFromServer(collection(db, "appointments")),
+        getCountFromServer(patientsRef),
+        getCountFromServer(testsRef),
+        getCountFromServer(appointmentsRef),
         getCountFromServer(
-          query(collection(db, "appointments"), where("status", "==", "scheduled"))
-        ),
-        getCountFromServer(
-          query(collection(db, "appointments"), where("status", "==", "completed"))
+          query(clinicsRef, where("createdAt", ">=", thirtyDaysAgoTimestamp))
         ),
         getCountFromServer(
-          query(collection(db, "appointments"), where("status", "==", "cancelled"))
+          query(usersRef, where("createdAt", ">=", thirtyDaysAgoTimestamp))
         ),
-        getDocs(query(collection(db, "tests"), orderBy("createdAt", "desc"), limit(5))),
-        getDocs(
-          query(
-            collection(db, "appointments"),
-            orderBy("appointmentAt", "asc"),
-            limit(20)
-          )
+        getCountFromServer(
+          query(patientsRef, where("createdAt", ">=", thirtyDaysAgoTimestamp))
         ),
-        getDocs(collection(db, "patients")),
-        getDocs(doctorsQuery),
+        getCountFromServer(
+          query(testsRef, where("createdAt", ">=", thirtyDaysAgoTimestamp))
+        ),
+        getDocs(query(clinicsRef, orderBy("createdAt", "desc"), limit(5))),
+        getDocs(query(usersRef, orderBy("createdAt", "desc"), limit(5))),
       ]);
 
       setCounts({
         clinics: clinicsSnap.data().count,
+        activeClinics: activeClinicsSnap.data().count,
+        users: usersSnap.data().count,
+        activeUsers: activeUsersSnap.data().count,
         doctors: doctorsSnap.data().count,
         patients: patientsSnap.data().count,
         tests: testsSnap.data().count,
         appointments: appointmentsSnap.data().count,
-        scheduledAppointments: scheduledSnap.data().count,
-        completedAppointments: completedSnap.data().count,
-        cancelledAppointments: cancelledSnap.data().count,
+        newClinics30d: newClinicsSnap.data().count,
+        newUsers30d: newUsersSnap.data().count,
+        newPatients30d: newPatientsSnap.data().count,
+        newTests30d: newTestsSnap.data().count,
       });
 
-      setRecentTests(
-        recentTestsSnap.docs.map((item) => {
+      setRecentClinics(
+        recentClinicsSnap.docs.map((item) => {
           const data = item.data();
 
           return {
             id: item.id,
-            patientId: data.patientId ?? "",
-            doctorId: data.doctorId ?? "",
-            sourceType: data.sourceType ?? "",
+            name: data.name ?? "",
+            email: data.email ?? "",
+            phone: data.phone ?? "",
+            isActive: data.isActive ?? true,
             createdAt: data.createdAt,
           };
         })
       );
 
-      setTodayAppointments(
-        appointmentsListSnap.docs
-          .map((item) => {
-            const data = item.data();
-
-            return {
-              id: item.id,
-              title: data.title ?? "",
-              patientId: data.patientId ?? "",
-              doctorId: data.doctorId ?? "",
-              appointmentAt: data.appointmentAt,
-              status: data.status ?? "scheduled",
-            };
-          })
-          .filter((appointment) => isToday(appointment.appointmentAt?.toDate?.()))
-      );
-
-      setPatients(
-        patientsListSnap.docs.map((item) => {
-          const data = item.data();
-
-          return {
-            id: item.id,
-            fullName: data.fullName ?? "",
-            tcKimlikNo: data.tcKimlikNo ?? "",
-          };
-        })
-      );
-
-      setDoctors(
-        doctorsListSnap.docs.map((item) => {
+      setRecentUsers(
+        recentUsersSnap.docs.map((item) => {
           const data = item.data();
 
           return {
             id: item.id,
             fullName: data.fullName ?? "",
             email: data.email ?? "",
+            role: data.role ?? "",
+            clinicId: data.clinicId ?? "",
+            isActive: data.isActive ?? true,
+            createdAt: data.createdAt,
           };
         })
       );
@@ -199,172 +219,189 @@ export default function DashboardPage() {
     loadDashboard();
   }, []);
 
-  const patientMap = useMemo(() => {
-    return Object.fromEntries(patients.map((patient) => [patient.id, patient]));
-  }, [patients]);
+  const activeClinicRate = useMemo(() => {
+    if (counts.clinics === 0) return 0;
+    return Math.round((counts.activeClinics / counts.clinics) * 100);
+  }, [counts.activeClinics, counts.clinics]);
 
-  const doctorMap = useMemo(() => {
-    return Object.fromEntries(doctors.map((doctor) => [doctor.id, doctor]));
-  }, [doctors]);
+  const activeUserRate = useMemo(() => {
+    if (counts.users === 0) return 0;
+    return Math.round((counts.activeUsers / counts.users) * 100);
+  }, [counts.activeUsers, counts.users]);
+
+  const testsPerClinic = useMemo(() => {
+    if (counts.clinics === 0) return 0;
+    return Number((counts.tests / counts.clinics).toFixed(1));
+  }, [counts.tests, counts.clinics]);
+
+  const patientsPerClinic = useMemo(() => {
+    if (counts.clinics === 0) return 0;
+    return Number((counts.patients / counts.clinics).toFixed(1));
+  }, [counts.patients, counts.clinics]);
 
   function formatDate(value: any) {
-    return value?.toDate?.().toLocaleString("tr-TR") ?? "-";
+    return value?.toDate?.().toLocaleDateString("tr-TR") ?? "-";
   }
 
-  function sourceLabel(sourceType: string) {
-    if (sourceType === "live_camera") return "Canlı Kamera";
-    if (sourceType === "gallery_video") return "Galeri Video";
-    return sourceType || "-";
+  function roleLabel(role: string) {
+    if (role === "admin") return "Admin";
+    if (role === "doctor") return "Doktor";
+    return role || "Kullanıcı";
   }
 
   return (
     <div className="text-slate-900">
-      <div className="flex items-start justify-between gap-4">
+      <div className="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
         <div>
-          <h1 className="text-2xl font-bold">Dashboard</h1>
-          <p className="mt-1 text-sm text-slate-500">
-            Klinik sisteminin genel durumu ve günlük operasyon özeti.
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-indigo-600">
+            v-HIT Mobil Admin
+          </p>
+          <h1 className="mt-2 text-2xl font-bold md:text-3xl">Platform Dashboard</h1>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-500">
+            Çoklu klinik yapısı için genel sistem görünümü. Bu ekran günlük randevu
+            operasyonu yerine platform büyüklüğü, aktiflik, veri hacmi ve yönetim
+            kısayollarına odaklanır.
           </p>
         </div>
 
         <button
           onClick={loadDashboard}
-          className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white hover:bg-slate-800"
+          disabled={isLoading}
+          className="rounded-xl bg-slate-900 px-4 py-2 text-sm font-semibold text-white shadow-sm hover:bg-slate-800 disabled:cursor-not-allowed disabled:opacity-60"
         >
-          Yenile
+          {isLoading ? "Yükleniyor..." : "Yenile"}
         </button>
       </div>
 
       {isLoading ? (
-        <p className="mt-8 text-slate-500">Veriler yükleniyor...</p>
+        <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+          {Array.from({ length: 8 }).map((_, index) => (
+            <div key={index} className="h-32 animate-pulse rounded-2xl bg-white shadow-sm" />
+          ))}
+        </div>
       ) : (
         <>
-          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-3 xl:grid-cols-5">
-            <StatCard title="Klinik" value={counts.clinics} href="/dashboard/clinics" />
-            <StatCard title="Doktor" value={counts.doctors} href="/dashboard/users" />
-            <StatCard title="Hasta" value={counts.patients} href="/dashboard/patients" />
-            <StatCard title="Test" value={counts.tests} href="/dashboard/tests" />
-            <StatCard
-              title="Randevu"
-              value={counts.appointments}
-              href="/dashboard/appointments"
+          <div className="mt-8 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+            <MetricCard
+              title="Toplam Klinik"
+              value={counts.clinics}
+              description={`${counts.activeClinics} aktif klinik`}
+              href="/dashboard/clinics"
+            />
+            <MetricCard
+              title="Toplam Kullanıcı"
+              value={counts.users}
+              description={`${counts.doctors} doktor hesabı`}
+              href="/dashboard/users"
+            />
+            <MetricCard
+              title="Toplam Hasta"
+              value={counts.patients}
+              description={`${patientsPerClinic} hasta / klinik`}
+              href="/dashboard/patients"
+            />
+            <MetricCard
+              title="Toplam Test"
+              value={counts.tests}
+              description={`${testsPerClinic} test / klinik`}
+              href="/dashboard/tests"
             />
           </div>
 
-          <div className="mt-6 grid grid-cols-1 gap-5 md:grid-cols-3">
-            <StatusCard
-              title="Planlanan Randevu"
-              value={counts.scheduledAppointments}
-              className="bg-blue-50 text-blue-700"
+          <div className="mt-5 grid grid-cols-1 gap-5 lg:grid-cols-3">
+            <HealthCard
+              title="Klinik Aktiflik Oranı"
+              value={`${activeClinicRate}%`}
+              description={`${counts.activeClinics} aktif / ${counts.clinics} toplam klinik`}
+              progress={activeClinicRate}
             />
-            <StatusCard
-              title="Tamamlanan Randevu"
-              value={counts.completedAppointments}
-              className="bg-green-50 text-green-700"
+            <HealthCard
+              title="Kullanıcı Aktiflik Oranı"
+              value={`${activeUserRate}%`}
+              description={`${counts.activeUsers} aktif / ${counts.users} toplam kullanıcı`}
+              progress={activeUserRate}
             />
-            <StatusCard
-              title="İptal Randevu"
-              value={counts.cancelledAppointments}
-              className="bg-red-50 text-red-700"
+            <HealthCard
+              title="Veri Hacmi"
+              value={counts.appointments.toLocaleString("tr-TR")}
+              description="Sistemdeki toplam randevu kaydı"
+              progress={Math.min(100, counts.appointments)}
             />
+          </div>
+
+          <div className="mt-5 grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-4">
+            <GrowthCard title="Yeni Klinik" value={counts.newClinics30d} />
+            <GrowthCard title="Yeni Kullanıcı" value={counts.newUsers30d} />
+            <GrowthCard title="Yeni Hasta" value={counts.newPatients30d} />
+            <GrowthCard title="Yeni Test" value={counts.newTests30d} />
           </div>
 
           <div className="mt-8 grid grid-cols-1 gap-6 xl:grid-cols-2">
             <section className="rounded-2xl bg-white p-6 shadow-sm">
-              <div className="flex items-center justify-between">
+              <div className="flex items-center justify-between gap-4">
                 <div>
-                  <h2 className="text-lg font-bold">Bugünkü Randevular</h2>
+                  <h2 className="text-lg font-bold">Yönetim Modülleri</h2>
                   <p className="mt-1 text-sm text-slate-500">
-                    Bugün planlanan operasyonlar.
+                    Admin panelinde en sık kullanılacak ana modüller.
                   </p>
                 </div>
-
-                <Link
-                  href="/dashboard/appointments"
-                  className="text-sm font-semibold text-indigo-600 hover:text-indigo-800"
-                >
-                  Tümünü gör
-                </Link>
               </div>
 
-              {todayAppointments.length === 0 ? (
-                <p className="mt-6 text-sm text-slate-500">
-                  Bugün için randevu görünmüyor.
-                </p>
-              ) : (
-                <div className="mt-5 space-y-3">
-                  {todayAppointments.slice(0, 5).map((appointment) => (
-                    <div
-                      key={appointment.id}
-                      className="rounded-xl border border-slate-100 p-4"
-                    >
-                      <div className="flex items-start justify-between gap-3">
-                        <div>
-                          <p className="font-semibold">{appointment.title}</p>
-                          <p className="mt-1 text-xs text-slate-500">
-                            {patientMap[appointment.patientId]?.fullName ??
-                              appointment.patientId}
-                            {" · "}
-                            {doctorMap[appointment.doctorId]?.fullName ??
-                              appointment.doctorId}
-                          </p>
-                        </div>
-
-                        <span className="rounded-full bg-blue-100 px-3 py-1 text-xs font-semibold text-blue-700">
-                          {formatDate(appointment.appointmentAt)}
-                        </span>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
+              <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+                {adminModules.map((module) => (
+                  <Link
+                    key={module.href}
+                    href={module.href}
+                    className="rounded-2xl border border-slate-100 p-4 transition hover:border-indigo-200 hover:bg-indigo-50/40"
+                  >
+                    <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-700">
+                      {module.badge}
+                    </span>
+                    <h3 className="mt-3 font-bold text-slate-900">{module.title}</h3>
+                    <p className="mt-2 text-sm leading-5 text-slate-500">
+                      {module.description}
+                    </p>
+                  </Link>
+                ))}
+              </div>
             </section>
 
             <section className="rounded-2xl bg-white p-6 shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
-                  <h2 className="text-lg font-bold">Son Testler</h2>
+                  <h2 className="text-lg font-bold">Son Eklenen Klinikler</h2>
                   <p className="mt-1 text-sm text-slate-500">
-                    Sisteme kaydedilen son test kayıtları.
+                    Platforma en son dahil edilen kurumlar.
                   </p>
                 </div>
 
                 <Link
-                  href="/dashboard/tests"
+                  href="/dashboard/clinics"
                   className="text-sm font-semibold text-indigo-600 hover:text-indigo-800"
                 >
                   Tümünü gör
                 </Link>
               </div>
 
-              {recentTests.length === 0 ? (
-                <p className="mt-6 text-sm text-slate-500">
-                  Henüz test kaydı yok.
-                </p>
+              {recentClinics.length === 0 ? (
+                <p className="mt-6 text-sm text-slate-500">Henüz klinik kaydı yok.</p>
               ) : (
                 <div className="mt-5 space-y-3">
-                  {recentTests.map((test) => (
-                    <div
-                      key={test.id}
-                      className="rounded-xl border border-slate-100 p-4"
-                    >
-                      <div className="flex items-start justify-between gap-3">
+                  {recentClinics.map((clinic) => (
+                    <div key={clinic.id} className="rounded-xl border border-slate-100 p-4">
+                      <div className="flex items-start justify-between gap-4">
                         <div>
                           <p className="font-semibold">
-                            {patientMap[test.patientId]?.fullName ?? test.patientId}
+                            {clinic.name.trim() === "" ? "İsimsiz Klinik" : clinic.name}
                           </p>
                           <p className="mt-1 text-xs text-slate-500">
-                            {doctorMap[test.doctorId]?.fullName ?? test.doctorId}
+                            {[clinic.email, clinic.phone].filter(Boolean).join(" · ") || "İletişim bilgisi yok"}
                           </p>
                         </div>
 
                         <div className="text-right">
-                          <span className="rounded-full bg-indigo-100 px-3 py-1 text-xs font-semibold text-indigo-700">
-                            {sourceLabel(test.sourceType)}
-                          </span>
-                          <p className="mt-2 text-xs text-slate-500">
-                            {formatDate(test.createdAt)}
-                          </p>
+                          <StatusPill isActive={clinic.isActive} />
+                          <p className="mt-2 text-xs text-slate-400">{formatDate(clinic.createdAt)}</p>
                         </div>
                       </div>
                     </div>
@@ -373,53 +410,137 @@ export default function DashboardPage() {
               )}
             </section>
           </div>
+
+          <section className="mt-6 rounded-2xl bg-white p-6 shadow-sm">
+            <div className="flex items-center justify-between">
+              <div>
+                <h2 className="text-lg font-bold">Son Eklenen Kullanıcılar</h2>
+                <p className="mt-1 text-sm text-slate-500">
+                  Yeni açılan admin/doktor hesapları ve hesap durumları.
+                </p>
+              </div>
+
+              <Link
+                href="/dashboard/users"
+                className="text-sm font-semibold text-indigo-600 hover:text-indigo-800"
+              >
+                Tümünü gör
+              </Link>
+            </div>
+
+            {recentUsers.length === 0 ? (
+              <p className="mt-6 text-sm text-slate-500">Henüz kullanıcı kaydı yok.</p>
+            ) : (
+              <div className="mt-5 overflow-hidden rounded-xl border border-slate-100">
+                <table className="min-w-full divide-y divide-slate-100 text-sm">
+                  <thead className="bg-slate-50 text-left text-xs font-semibold uppercase tracking-wide text-slate-500">
+                    <tr>
+                      <th className="px-4 py-3">Kullanıcı</th>
+                      <th className="px-4 py-3">Rol</th>
+                      <th className="px-4 py-3">Durum</th>
+                      <th className="px-4 py-3">Oluşturulma</th>
+                    </tr>
+                  </thead>
+                  <tbody className="divide-y divide-slate-100 bg-white">
+                    {recentUsers.map((user) => (
+                      <tr key={user.id}>
+                        <td className="px-4 py-3">
+                          <p className="font-semibold text-slate-900">
+                              {user.fullName.trim() === "" ? "İsimsiz Kullanıcı" : user.fullName}                          </p>
+                          <p className="mt-1 text-xs text-slate-500">{user.email || "E-posta yok"}</p>
+                        </td>
+                        <td className="px-4 py-3 text-slate-600">{roleLabel(user.role)}</td>
+                        <td className="px-4 py-3">
+                          <StatusPill isActive={user.isActive} />
+                        </td>
+                        <td className="px-4 py-3 text-slate-500">{formatDate(user.createdAt)}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
         </>
       )}
     </div>
   );
 }
 
-function isToday(date?: Date) {
-  if (!date) return false;
-
-  const now = new Date();
-  return (
-    date.getFullYear() === now.getFullYear() &&
-    date.getMonth() === now.getMonth() &&
-    date.getDate() === now.getDate()
-  );
-}
-
-function StatCard({
+function MetricCard({
   title,
   value,
+  description,
   href,
 }: {
   title: string;
   value: number;
+  description: string;
   href: string;
 }) {
   return (
-    <Link href={href} className="rounded-2xl bg-white p-5 shadow-sm hover:shadow-md">
-      <p className="text-sm text-slate-500">{title}</p>
-      <p className="mt-2 text-3xl font-bold text-slate-900">{value}</p>
+    <Link href={href} className="rounded-2xl bg-white p-5 shadow-sm transition hover:shadow-md">
+      <p className="text-sm font-medium text-slate-500">{title}</p>
+      <p className="mt-2 text-3xl font-bold text-slate-900">
+        {value.toLocaleString("tr-TR")}
+      </p>
+      <p className="mt-2 text-sm text-slate-500">{description}</p>
     </Link>
   );
 }
 
-function StatusCard({
+function HealthCard({
   title,
   value,
-  className,
+  description,
+  progress,
 }: {
   title: string;
-  value: number;
-  className: string;
+  value: string;
+  description: string;
+  progress: number;
 }) {
+  const boundedProgress = Math.max(0, Math.min(100, progress));
+
   return (
-    <div className={`rounded-2xl p-5 shadow-sm ${className}`}>
-      <p className="text-sm font-medium">{title}</p>
-      <p className="mt-2 text-3xl font-bold">{value}</p>
+    <div className="rounded-2xl bg-white p-5 shadow-sm">
+      <div className="flex items-start justify-between gap-4">
+        <div>
+          <p className="text-sm font-medium text-slate-500">{title}</p>
+          <p className="mt-2 text-3xl font-bold text-slate-900">{value}</p>
+        </div>
+      </div>
+      <div className="mt-4 h-2 rounded-full bg-slate-100">
+        <div
+          className="h-2 rounded-full bg-indigo-600"
+          style={{ width: `${boundedProgress}%` }}
+        />
+      </div>
+      <p className="mt-3 text-sm text-slate-500">{description}</p>
     </div>
+  );
+}
+
+function GrowthCard({ title, value }: { title: string; value: number }) {
+  return (
+    <div className="rounded-2xl border border-indigo-100 bg-indigo-50/50 p-5">
+      <p className="text-sm font-medium text-indigo-700">Son 30 Gün</p>
+      <p className="mt-2 text-2xl font-bold text-slate-900">
+        {value.toLocaleString("tr-TR")}
+      </p>
+      <p className="mt-1 text-sm text-slate-600">{title}</p>
+    </div>
+  );
+}
+
+function StatusPill({ isActive }: { isActive: boolean }) {
+  return (
+    <span
+      className={`rounded-full px-3 py-1 text-xs font-semibold ${
+        isActive ? "bg-green-100 text-green-700" : "bg-slate-100 text-slate-500"
+      }`}
+    >
+      {isActive ? "Aktif" : "Pasif"}
+    </span>
   );
 }
