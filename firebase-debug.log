@@ -1,0 +1,527 @@
+[debug] [2026-06-19T12:57:02.114Z] ----------------------------------------------------------------------
+[debug] [2026-06-19T12:57:02.116Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\yusuf\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions:notifyAdminOnFeedbackCreated --project v-hit-vision
+[debug] [2026-06-19T12:57:02.116Z] CLI Version:   15.22.0
+[debug] [2026-06-19T12:57:02.116Z] Platform:      win32
+[debug] [2026-06-19T12:57:02.116Z] Node Version:  v22.20.0
+[debug] [2026-06-19T12:57:02.116Z] Detected Agent: unknown
+[debug] [2026-06-19T12:57:02.116Z] Time:          Fri Jun 19 2026 15:57:02 GMT+0300 (GMT+03:00)
+[debug] [2026-06-19T12:57:02.116Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-19T12:57:03.752Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-19T12:57:03.752Z] > authorizing via signed-in user (vhitvision@gmail.com)
+[debug] [2026-06-19T12:57:03.753Z] [iam] checking project v-hit-vision for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2026-06-19T12:57:03.753Z] Checked if tokens are valid: false, expires at: 1781869907133
+[debug] [2026-06-19T12:57:03.753Z] Checked if tokens are valid: false, expires at: 1781869907133
+[debug] [2026-06-19T12:57:03.754Z] > refreshing access token with scopes: []
+[debug] [2026-06-19T12:57:03.755Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2026-06-19T12:57:03.755Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-19T12:57:03.965Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2026-06-19T12:57:03.965Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2026-06-19T12:57:03.971Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions [none]
+[debug] [2026-06-19T12:57:03.971Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions  x-goog-user-project=v-hit-vision
+[debug] [2026-06-19T12:57:03.971Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2026-06-19T12:57:04.987Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions 200
+[debug] [2026-06-19T12:57:04.987Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2026-06-19T12:57:04.987Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:04.987Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:04.987Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/v-hit-vision/serviceAccounts/v-hit-vision@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2026-06-19T12:57:04.987Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/v-hit-vision/serviceAccounts/v-hit-vision@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2026-06-19T12:57:06.026Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/v-hit-vision/serviceAccounts/v-hit-vision@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2026-06-19T12:57:06.026Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/v-hit-vision/serviceAccounts/v-hit-vision@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'v-hit-vision'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] +  functions: Finished running predeploy script. 
+[debug] [2026-06-19T12:57:08.455Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:08.455Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:08.455Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision [none]
+[debug] [2026-06-19T12:57:08.708Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision 200
+[debug] [2026-06-19T12:57:08.708Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision {"projectNumber":"1085557656722","projectId":"v-hit-vision","lifecycleState":"ACTIVE","name":"v-HIT Vision","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2026-04-13T10:46:02.406Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[debug] [2026-06-19T12:57:08.710Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:08.710Z] Checked if tokens are valid: true, expires at: 1781877422965
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2026-06-19T12:57:08.710Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:08.710Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:08.710Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/cloudbuild.googleapis.com [none]
+[debug] [2026-06-19T12:57:08.710Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/cloudbuild.googleapis.com  x-goog-user-project=v-hit-vision
+[debug] [2026-06-19T12:57:08.711Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/artifactregistry.googleapis.com [none]
+[debug] [2026-06-19T12:57:08.711Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/artifactregistry.googleapis.com  x-goog-user-project=v-hit-vision
+[debug] [2026-06-19T12:57:09.923Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/cloudbuild.googleapis.com 200
+[debug] [2026-06-19T12:57:09.923Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/cloudbuild.googleapis.com [omitted]
+[warn] !  functions: missing required API cloudbuild.googleapis.com. Enabling now... 
+[debug] [2026-06-19T12:57:09.923Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:09.923Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:09.923Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/cloudbuild.googleapis.com:enable [none]
+[debug] [2026-06-19T12:57:09.923Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/cloudbuild.googleapis.com:enable  x-goog-user-project=v-hit-vision
+[debug] [2026-06-19T12:57:09.948Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/artifactregistry.googleapis.com 200
+[debug] [2026-06-19T12:57:09.948Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/artifactregistry.googleapis.com [omitted]
+[warn] !  artifactregistry: missing required API artifactregistry.googleapis.com. Enabling now... 
+[debug] [2026-06-19T12:57:09.948Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:09.948Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:09.948Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/artifactregistry.googleapis.com:enable [none]
+[debug] [2026-06-19T12:57:09.948Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/artifactregistry.googleapis.com:enable  x-goog-user-project=v-hit-vision
+[debug] [2026-06-19T12:57:10.637Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/cloudbuild.googleapis.com:enable 200
+[debug] [2026-06-19T12:57:10.637Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/cloudbuild.googleapis.com:enable [omitted]
+[debug] [2026-06-19T12:57:10.760Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/artifactregistry.googleapis.com:enable 200
+[debug] [2026-06-19T12:57:10.760Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/artifactregistry.googleapis.com:enable [omitted]
+[debug] [2026-06-19T12:57:20.778Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:20.779Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:20.779Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/v-hit-vision/adminSdkConfig [none]
+[debug] [2026-06-19T12:57:21.424Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/v-hit-vision/adminSdkConfig 200
+[debug] [2026-06-19T12:57:21.424Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/v-hit-vision/adminSdkConfig {"projectId":"v-hit-vision","storageBucket":"v-hit-vision.firebasestorage.app"}
+[debug] [2026-06-19T12:57:21.425Z] Validating nodejs source
+[debug] [2026-06-19T12:57:22.005Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "24"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^7.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.0",
+    "firebase-functions-test": "^3.4.1"
+  },
+  "private": true
+}
+[debug] [2026-06-19T12:57:22.005Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2026-06-19T12:57:22.006Z] Could not find functions.yaml. Must use http discovery
+[debug] [2026-06-19T12:57:22.010Z] Found firebase-functions binary at 'C:\Users\yusuf\Documents\staj_flutter_apps\vhit-admin-panel\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8791
+
+[debug] [2026-06-19T12:57:22.697Z] Got response from /__/functions.yaml {"endpoints":{"notifyAdminOnFeedbackCreated":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","secretEnvironmentVariables":[{"key":"VHIT_WEBHOOK_SECRET"}],"labels":{},"eventTrigger":{"eventType":"google.cloud.firestore.document.v1.created","eventFilters":{"database":"(default)","namespace":"(default)"},"eventFilterPathPatterns":{"document":"feedbacks/{feedbackId}"},"retry":false},"entryPoint":"notifyAdminOnFeedbackCreated"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{},"params":[{"name":"ADMIN_PANEL_BASE_URL","type":"string"},{"type":"secret","name":"VHIT_WEBHOOK_SECRET"}]}
+[debug] [2026-06-19T12:57:26.743Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:26.743Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:26.743Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/v-hit-vision/locations/-/functions [none]
+[debug] [2026-06-19T12:57:27.577Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/v-hit-vision/locations/-/functions 200
+[debug] [2026-06-19T12:57:27.577Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/v-hit-vision/locations/-/functions {}
+[debug] [2026-06-19T12:57:27.577Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:27.577Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:27.577Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2026-06-19T12:57:28.221Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/-/functions 200
+[debug] [2026-06-19T12:57:28.221Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/-/functions {}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2026-06-19T12:57:28.222Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:28.222Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:28.222Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/firebaseextensions.googleapis.com [none]
+[debug] [2026-06-19T12:57:28.222Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/firebaseextensions.googleapis.com  x-goog-user-project=v-hit-vision
+[debug] [2026-06-19T12:57:29.331Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/firebaseextensions.googleapis.com 200
+[debug] [2026-06-19T12:57:29.331Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/firebaseextensions.googleapis.com [omitted]
+[warn] !  extensions: missing required API firebaseextensions.googleapis.com. Enabling now... 
+[debug] [2026-06-19T12:57:29.332Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:29.332Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:29.332Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/firebaseextensions.googleapis.com:enable [none]
+[debug] [2026-06-19T12:57:29.332Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/firebaseextensions.googleapis.com:enable  x-goog-user-project=v-hit-vision
+[debug] [2026-06-19T12:57:30.090Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/firebaseextensions.googleapis.com:enable 200
+[debug] [2026-06-19T12:57:30.090Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/v-hit-vision/services/firebaseextensions.googleapis.com:enable [omitted]
+[debug] [2026-06-19T12:57:40.109Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-19T12:57:40.110Z] > authorizing via signed-in user (vhitvision@gmail.com)
+[debug] [2026-06-19T12:57:40.110Z] [iam] checking project v-hit-vision for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[debug] [2026-06-19T12:57:40.110Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:40.110Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:40.110Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions [none]
+[debug] [2026-06-19T12:57:40.110Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions  x-goog-user-project=v-hit-vision
+[debug] [2026-06-19T12:57:40.110Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2026-06-19T12:57:41.060Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions 200
+[debug] [2026-06-19T12:57:41.060Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2026-06-19T12:57:41.060Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:41.060Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:41.061Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/v-hit-vision/instances pageSize=100&pageToken=
+[debug] [2026-06-19T12:57:43.475Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/v-hit-vision/instances 200
+[debug] [2026-06-19T12:57:43.475Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/v-hit-vision/instances {}
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2026-06-19T12:57:43.478Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:43.478Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:43.478Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/v-hit-vision/databases/(default) [none]
+[debug] [2026-06-19T12:57:43.948Z] <<< [apiv2][status] GET https://firestore.googleapis.com/v1/projects/v-hit-vision/databases/(default) 200
+[debug] [2026-06-19T12:57:43.948Z] <<< [apiv2][body] GET https://firestore.googleapis.com/v1/projects/v-hit-vision/databases/(default) {"name":"projects/v-hit-vision/databases/(default)","uid":"0187ae01-9412-4ee1-b1dc-8f474e820f60","createTime":"2026-04-13T12:15:59.162429Z","updateTime":"2026-04-13T12:15:59.162429Z","locationId":"eur3","type":"FIRESTORE_NATIVE","concurrencyMode":"PESSIMISTIC","versionRetentionPeriod":"3600s","earliestVersionTime":"2026-06-19T11:57:44.732404Z","appEngineIntegrationMode":"DISABLED","keyPrefix":"e","pointInTimeRecoveryEnablement":"POINT_IN_TIME_RECOVERY_DISABLED","deleteProtectionState":"DELETE_PROTECTION_DISABLED","databaseEdition":"STANDARD","freeTier":true,"realtimeUpdatesMode":"REALTIME_UPDATES_MODE_ENABLED","etag":"IOfW97Wtk5UDMOy6xcHn6pMD"}
+[debug] [2026-06-19T12:57:43.949Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:43.949Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:43.949Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET [none]
+[debug] [2026-06-19T12:57:44.531Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET 200
+[debug] [2026-06-19T12:57:44.532Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET {"name":"projects/1085557656722/secrets/VHIT_WEBHOOK_SECRET","replication":{"automatic":{}},"createTime":"2026-06-19T11:03:14.696030Z","labels":{"firebase-managed":"functions"},"etag":"\"1654993d4d128d\""}
+[debug] [2026-06-19T12:57:44.532Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:44.532Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:44.532Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET/versions/latest [none]
+[debug] [2026-06-19T12:57:44.757Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET/versions/latest 200
+[debug] [2026-06-19T12:57:44.757Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET/versions/latest {"name":"projects/1085557656722/secrets/VHIT_WEBHOOK_SECRET/versions/2","createTime":"2026-06-19T11:17:32.077005Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"165499705c17cd\""}
+[info] i  functions: preparing functions directory for uploading... 
+[info] i  functions: packaged C:\Users\yusuf\Documents\staj_flutter_apps\vhit-admin-panel\functions (72.9 KB) for uploading 
+[info] i  functions: ensuring required API run.googleapis.com is enabled... 
+[debug] [2026-06-19T12:57:44.789Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:44.789Z] Checked if tokens are valid: true, expires at: 1781877422965
+[info] i  functions: ensuring required API eventarc.googleapis.com is enabled... 
+[debug] [2026-06-19T12:57:44.789Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:44.789Z] Checked if tokens are valid: true, expires at: 1781877422965
+[info] i  functions: ensuring required API pubsub.googleapis.com is enabled... 
+[debug] [2026-06-19T12:57:44.790Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:44.790Z] Checked if tokens are valid: true, expires at: 1781877422965
+[info] i  functions: ensuring required API storage.googleapis.com is enabled... 
+[debug] [2026-06-19T12:57:44.790Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:44.790Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:44.790Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/run.googleapis.com [none]
+[debug] [2026-06-19T12:57:44.790Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/run.googleapis.com  x-goog-user-project=1085557656722
+[debug] [2026-06-19T12:57:44.791Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/eventarc.googleapis.com [none]
+[debug] [2026-06-19T12:57:44.791Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/eventarc.googleapis.com  x-goog-user-project=1085557656722
+[debug] [2026-06-19T12:57:44.791Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/pubsub.googleapis.com [none]
+[debug] [2026-06-19T12:57:44.791Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/pubsub.googleapis.com  x-goog-user-project=1085557656722
+[debug] [2026-06-19T12:57:44.792Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/storage.googleapis.com [none]
+[debug] [2026-06-19T12:57:44.792Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/storage.googleapis.com  x-goog-user-project=1085557656722
+[debug] [2026-06-19T12:57:45.873Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/pubsub.googleapis.com 200
+[debug] [2026-06-19T12:57:45.873Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/pubsub.googleapis.com [omitted]
+[info] +  functions: required API pubsub.googleapis.com is enabled 
+[debug] [2026-06-19T12:57:45.877Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/eventarc.googleapis.com 200
+[debug] [2026-06-19T12:57:45.877Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/eventarc.googleapis.com [omitted]
+[warn] !  functions: missing required API eventarc.googleapis.com. Enabling now... 
+[debug] [2026-06-19T12:57:45.878Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:45.878Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:45.878Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/1085557656722/services/eventarc.googleapis.com:enable [none]
+[debug] [2026-06-19T12:57:45.878Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/1085557656722/services/eventarc.googleapis.com:enable  x-goog-user-project=1085557656722
+[debug] [2026-06-19T12:57:45.886Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/run.googleapis.com 200
+[debug] [2026-06-19T12:57:45.886Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/run.googleapis.com [omitted]
+[warn] !  functions: missing required API run.googleapis.com. Enabling now... 
+[debug] [2026-06-19T12:57:45.886Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:45.886Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:45.886Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1/projects/1085557656722/services/run.googleapis.com:enable [none]
+[debug] [2026-06-19T12:57:45.886Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1/projects/1085557656722/services/run.googleapis.com:enable  x-goog-user-project=1085557656722
+[debug] [2026-06-19T12:57:45.899Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/storage.googleapis.com 200
+[debug] [2026-06-19T12:57:45.899Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/storage.googleapis.com [omitted]
+[info] +  functions: required API storage.googleapis.com is enabled 
+[debug] [2026-06-19T12:57:46.597Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/1085557656722/services/eventarc.googleapis.com:enable 200
+[debug] [2026-06-19T12:57:46.597Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/1085557656722/services/eventarc.googleapis.com:enable [omitted]
+[debug] [2026-06-19T12:57:46.666Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1/projects/1085557656722/services/run.googleapis.com:enable 200
+[debug] [2026-06-19T12:57:46.666Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1/projects/1085557656722/services/run.googleapis.com:enable [omitted]
+[info] i  functions: generating the service identity for pubsub.googleapis.com... 
+[debug] [2026-06-19T12:57:56.686Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:56.686Z] Checked if tokens are valid: true, expires at: 1781877422965
+[info] i  functions: generating the service identity for eventarc.googleapis.com... 
+[debug] [2026-06-19T12:57:56.686Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:56.686Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:56.686Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/1085557656722/services/pubsub.googleapis.com:generateServiceIdentity [none]
+[debug] [2026-06-19T12:57:56.686Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1beta1/projects/1085557656722/services/pubsub.googleapis.com:generateServiceIdentity  x-goog-user-project=1085557656722
+[debug] [2026-06-19T12:57:56.686Z] >>> [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/1085557656722/services/pubsub.googleapis.com:generateServiceIdentity {}
+[debug] [2026-06-19T12:57:56.687Z] >>> [apiv2][query] POST https://serviceusage.googleapis.com/v1beta1/projects/1085557656722/services/eventarc.googleapis.com:generateServiceIdentity [none]
+[debug] [2026-06-19T12:57:56.687Z] >>> [apiv2][(partial)header] POST https://serviceusage.googleapis.com/v1beta1/projects/1085557656722/services/eventarc.googleapis.com:generateServiceIdentity  x-goog-user-project=1085557656722
+[debug] [2026-06-19T12:57:56.687Z] >>> [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/1085557656722/services/eventarc.googleapis.com:generateServiceIdentity {}
+[debug] [2026-06-19T12:57:58.257Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/1085557656722/services/pubsub.googleapis.com:generateServiceIdentity 200
+[debug] [2026-06-19T12:57:58.258Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/1085557656722/services/pubsub.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-1085557656722@gcp-sa-pubsub.iam.gserviceaccount.com","uniqueId":"115450117973433346015"}}
+[debug] [2026-06-19T12:57:58.404Z] <<< [apiv2][status] POST https://serviceusage.googleapis.com/v1beta1/projects/1085557656722/services/eventarc.googleapis.com:generateServiceIdentity 200
+[debug] [2026-06-19T12:57:58.404Z] <<< [apiv2][body] POST https://serviceusage.googleapis.com/v1beta1/projects/1085557656722/services/eventarc.googleapis.com:generateServiceIdentity {"name":"operations/finished.DONE_OPERATION","done":true,"response":{"@type":"type.googleapis.com/google.api.serviceusage.v1beta1.ServiceIdentity","email":"service-1085557656722@gcp-sa-eventarc.iam.gserviceaccount.com","uniqueId":"114754493360457372919"}}
+[info] i  functions: ensuring required API secretmanager.googleapis.com is enabled... 
+[debug] [2026-06-19T12:57:58.405Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:58.405Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:58.405Z] >>> [apiv2][query] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/secretmanager.googleapis.com [none]
+[debug] [2026-06-19T12:57:58.405Z] >>> [apiv2][(partial)header] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/secretmanager.googleapis.com  x-goog-user-project=1085557656722
+[debug] [2026-06-19T12:57:58.838Z] <<< [apiv2][status] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/secretmanager.googleapis.com 200
+[debug] [2026-06-19T12:57:58.838Z] <<< [apiv2][body] GET https://serviceusage.googleapis.com/v1/projects/1085557656722/services/secretmanager.googleapis.com [omitted]
+[info] +  functions: required API secretmanager.googleapis.com is enabled 
+[debug] [2026-06-19T12:57:58.843Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:58.843Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:58.844Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET/versions/latest [none]
+[debug] [2026-06-19T12:57:59.290Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET/versions/latest 200
+[debug] [2026-06-19T12:57:59.290Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET/versions/latest {"name":"projects/1085557656722/secrets/VHIT_WEBHOOK_SECRET/versions/2","createTime":"2026-06-19T11:17:32.077005Z","state":"ENABLED","replicationStatus":{"automatic":{}},"etag":"\"165499705c17cd\""}
+[debug] [2026-06-19T12:57:59.290Z] Resolved secret version of VHIT_WEBHOOK_SECRET to 2.
+[debug] [2026-06-19T12:57:59.291Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:59.291Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:59.291Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/1085557656722 [none]
+[debug] [2026-06-19T12:57:59.672Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/1085557656722 403
+[debug] [2026-06-19T12:57:59.672Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/1085557656722 {"error":{"code":403,"message":"Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"service":"compute.googleapis.com","containerInfo":"1085557656722","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722","consumer":"projects/1085557656722","serviceTitle":"Compute Engine API"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722"}]}]}}
+[debug] [2026-06-19T12:57:59.672Z] unable to look up default compute service account. Falling back to 1085557656722-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"service":"compute.googleapis.com","containerInfo":"1085557656722","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722","consumer":"projects/1085557656722","serviceTitle":"Compute Engine API"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/1085557656722 had HTTP Error: 403, Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[debug] [2026-06-19T12:57:59.673Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:59.673Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:57:59.673Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/1085557656722:getIamPolicy [none]
+[debug] [2026-06-19T12:58:00.712Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/1085557656722:getIamPolicy 200
+[debug] [2026-06-19T12:58:00.712Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/1085557656722:getIamPolicy {"version":1,"etag":"BwZUmtdPPwU=","bindings":[{"role":"roles/cloudbuild.builds.builder","members":["serviceAccount:1085557656722@cloudbuild.gserviceaccount.com"]},{"role":"roles/cloudbuild.serviceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-cloudbuild.iam.gserviceaccount.com"]},{"role":"roles/cloudfunctions.serviceAgent","members":["serviceAccount:service-1085557656722@gcf-admin-robot.iam.gserviceaccount.com"]},{"role":"roles/containerregistry.ServiceAgent","members":["serviceAccount:service-1085557656722@containerregistry.iam.gserviceaccount.com"]},{"role":"roles/editor","members":["serviceAccount:1085557656722-compute@developer.gserviceaccount.com","serviceAccount:1085557656722@cloudservices.gserviceaccount.com","serviceAccount:v-hit-vision@appspot.gserviceaccount.com"]},{"role":"roles/firebase.managementServiceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firebase.iam.gserviceaccount.com"]},{"role":"roles/firebase.sdkAdminServiceAgent","members":["serviceAccount:firebase-adminsdk-fbsvc@v-hit-vision.iam.gserviceaccount.com"]},{"role":"roles/firebaseauth.admin","members":["serviceAccount:firebase-adminsdk-fbsvc@v-hit-vision.iam.gserviceaccount.com"]},{"role":"roles/firebasemods.serviceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firebasemods.iam.gserviceaccount.com"]},{"role":"roles/firebaserules.firestoreServiceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firebasestorage.iam.gserviceaccount.com"]},{"role":"roles/firebaserules.system","members":["serviceAccount:service-1085557656722@firebase-rules.iam.gserviceaccount.com"]},{"role":"roles/firebasestorage.serviceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firebasestorage.iam.gserviceaccount.com"]},{"role":"roles/firestore.serviceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firestore.iam.gserviceaccount.com"]},{"role":"roles/iam.serviceAccountTokenCreator","members":["serviceAccount:firebase-adminsdk-fbsvc@v-hit-vision.iam.gserviceaccount.com"]},{"role":"roles/owner","members":["user:vhitvision@gmail.com"]},{"role":"roles/run.serviceAgent","members":["serviceAccount:service-1085557656722@serverless-robot-prod.iam.gserviceaccount.com"]},{"role":"roles/storage.admin","members":["serviceAccount:firebase-adminsdk-fbsvc@v-hit-vision.iam.gserviceaccount.com"]}]}
+[debug] [2026-06-19T12:58:00.712Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:00.714Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:00.714Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/1085557656722:setIamPolicy [none]
+[debug] [2026-06-19T12:58:00.714Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/1085557656722:setIamPolicy {"policy":{"version":1,"etag":"BwZUmtdPPwU=","bindings":[{"role":"roles/cloudbuild.builds.builder","members":["serviceAccount:1085557656722@cloudbuild.gserviceaccount.com"]},{"role":"roles/cloudbuild.serviceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-cloudbuild.iam.gserviceaccount.com"]},{"role":"roles/cloudfunctions.serviceAgent","members":["serviceAccount:service-1085557656722@gcf-admin-robot.iam.gserviceaccount.com"]},{"role":"roles/containerregistry.ServiceAgent","members":["serviceAccount:service-1085557656722@containerregistry.iam.gserviceaccount.com"]},{"role":"roles/editor","members":["serviceAccount:1085557656722-compute@developer.gserviceaccount.com","serviceAccount:1085557656722@cloudservices.gserviceaccount.com","serviceAccount:v-hit-vision@appspot.gserviceaccount.com"]},{"role":"roles/firebase.managementServiceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firebase.iam.gserviceaccount.com"]},{"role":"roles/firebase.sdkAdminServiceAgent","members":["serviceAccount:firebase-adminsdk-fbsvc@v-hit-vision.iam.gserviceaccount.com"]},{"role":"roles/firebaseauth.admin","members":["serviceAccount:firebase-adminsdk-fbsvc@v-hit-vision.iam.gserviceaccount.com"]},{"role":"roles/firebasemods.serviceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firebasemods.iam.gserviceaccount.com"]},{"role":"roles/firebaserules.firestoreServiceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firebasestorage.iam.gserviceaccount.com"]},{"role":"roles/firebaserules.system","members":["serviceAccount:service-1085557656722@firebase-rules.iam.gserviceaccount.com"]},{"role":"roles/firebasestorage.serviceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firebasestorage.iam.gserviceaccount.com"]},{"role":"roles/firestore.serviceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firestore.iam.gserviceaccount.com"]},{"role":"roles/iam.serviceAccountTokenCreator","members":["serviceAccount:firebase-adminsdk-fbsvc@v-hit-vision.iam.gserviceaccount.com","serviceAccount:service-1085557656722@gcp-sa-pubsub.iam.gserviceaccount.com"]},{"role":"roles/owner","members":["user:vhitvision@gmail.com"]},{"role":"roles/run.serviceAgent","members":["serviceAccount:service-1085557656722@serverless-robot-prod.iam.gserviceaccount.com"]},{"role":"roles/storage.admin","members":["serviceAccount:firebase-adminsdk-fbsvc@v-hit-vision.iam.gserviceaccount.com"]},{"role":"roles/run.invoker","members":["serviceAccount:1085557656722-compute@developer.gserviceaccount.com"]},{"role":"roles/eventarc.eventReceiver","members":["serviceAccount:1085557656722-compute@developer.gserviceaccount.com"]}]},"updateMask":"bindings"}
+[debug] [2026-06-19T12:58:01.757Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/1085557656722:setIamPolicy 200
+[debug] [2026-06-19T12:58:01.757Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/1085557656722:setIamPolicy {"version":1,"etag":"BwZUmtfMb9s=","bindings":[{"role":"roles/cloudbuild.builds.builder","members":["serviceAccount:1085557656722@cloudbuild.gserviceaccount.com"]},{"role":"roles/cloudbuild.serviceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-cloudbuild.iam.gserviceaccount.com"]},{"role":"roles/cloudfunctions.serviceAgent","members":["serviceAccount:service-1085557656722@gcf-admin-robot.iam.gserviceaccount.com"]},{"role":"roles/containerregistry.ServiceAgent","members":["serviceAccount:service-1085557656722@containerregistry.iam.gserviceaccount.com"]},{"role":"roles/editor","members":["serviceAccount:1085557656722-compute@developer.gserviceaccount.com","serviceAccount:1085557656722@cloudservices.gserviceaccount.com","serviceAccount:v-hit-vision@appspot.gserviceaccount.com"]},{"role":"roles/eventarc.eventReceiver","members":["serviceAccount:1085557656722-compute@developer.gserviceaccount.com"]},{"role":"roles/firebase.managementServiceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firebase.iam.gserviceaccount.com"]},{"role":"roles/firebase.sdkAdminServiceAgent","members":["serviceAccount:firebase-adminsdk-fbsvc@v-hit-vision.iam.gserviceaccount.com"]},{"role":"roles/firebaseauth.admin","members":["serviceAccount:firebase-adminsdk-fbsvc@v-hit-vision.iam.gserviceaccount.com"]},{"role":"roles/firebasemods.serviceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firebasemods.iam.gserviceaccount.com"]},{"role":"roles/firebaserules.firestoreServiceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firebasestorage.iam.gserviceaccount.com"]},{"role":"roles/firebaserules.system","members":["serviceAccount:service-1085557656722@firebase-rules.iam.gserviceaccount.com"]},{"role":"roles/firebasestorage.serviceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firebasestorage.iam.gserviceaccount.com"]},{"role":"roles/firestore.serviceAgent","members":["serviceAccount:service-1085557656722@gcp-sa-firestore.iam.gserviceaccount.com"]},{"role":"roles/iam.serviceAccountTokenCreator","members":["serviceAccount:firebase-adminsdk-fbsvc@v-hit-vision.iam.gserviceaccount.com","serviceAccount:service-1085557656722@gcp-sa-pubsub.iam.gserviceaccount.com"]},{"role":"roles/owner","members":["user:vhitvision@gmail.com"]},{"role":"roles/run.invoker","members":["serviceAccount:1085557656722-compute@developer.gserviceaccount.com"]},{"role":"roles/run.serviceAgent","members":["serviceAccount:service-1085557656722@serverless-robot-prod.iam.gserviceaccount.com"]},{"role":"roles/storage.admin","members":["serviceAccount:firebase-adminsdk-fbsvc@v-hit-vision.iam.gserviceaccount.com"]}]}
+[debug] [2026-06-19T12:58:01.757Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:01.757Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:01.757Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision [none]
+[debug] [2026-06-19T12:58:01.978Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision 200
+[debug] [2026-06-19T12:58:01.978Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision {"projectNumber":"1085557656722","projectId":"v-hit-vision","lifecycleState":"ACTIVE","name":"v-HIT Vision","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2026-04-13T10:46:02.406Z"}
+[debug] [2026-06-19T12:58:01.979Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:01.979Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:01.979Z] >>> [apiv2][query] GET https://compute.googleapis.com/compute/v1/projects/1085557656722 [none]
+[debug] [2026-06-19T12:58:02.214Z] <<< [apiv2][status] GET https://compute.googleapis.com/compute/v1/projects/1085557656722 403
+[debug] [2026-06-19T12:58:02.214Z] <<< [apiv2][body] GET https://compute.googleapis.com/compute/v1/projects/1085557656722 {"error":{"code":403,"message":"Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"serviceTitle":"Compute Engine API","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722","service":"compute.googleapis.com","consumer":"projects/1085557656722","containerInfo":"1085557656722"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722"}]}]}}
+[debug] [2026-06-19T12:58:02.214Z] unable to look up default compute service account. Falling back to 1085557656722-compute@developer.gserviceaccount.com. Error: {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":403,"message":"Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","errors":[{"message":"Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","domain":"usageLimits","reason":"accessNotConfigured","extendedHelp":"https://console.developers.google.com"}],"status":"PERMISSION_DENIED","details":[{"@type":"type.googleapis.com/google.rpc.ErrorInfo","reason":"SERVICE_DISABLED","domain":"googleapis.com","metadata":{"serviceTitle":"Compute Engine API","activationUrl":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722","service":"compute.googleapis.com","consumer":"projects/1085557656722","containerInfo":"1085557656722"}},{"@type":"type.googleapis.com/google.rpc.LocalizedMessage","locale":"en-US","message":"Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry."},{"@type":"type.googleapis.com/google.rpc.Help","links":[{"description":"Google developers console API activation","url":"https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722"}]}]}},"response":{"statusCode":403}},"exit":1,"message":"Request to https://compute.googleapis.com/compute/v1/projects/1085557656722 had HTTP Error: 403, Compute Engine API has not been used in project 1085557656722 before or it is disabled. Enable it by visiting https://console.developers.google.com/apis/api/compute.googleapis.com/overview?project=1085557656722 then retry. If you enabled this API recently, wait a few minutes for the action to propagate to our systems and retry.","status":403}
+[info] i  functions: ensuring 1085557656722-compute@developer.gserviceaccount.com access to secret VHIT_WEBHOOK_SECRET. 
+[debug] [2026-06-19T12:58:02.215Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:02.215Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:02.215Z] >>> [apiv2][query] GET https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET:getIamPolicy [none]
+[debug] [2026-06-19T12:58:02.695Z] <<< [apiv2][status] GET https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET:getIamPolicy 200
+[debug] [2026-06-19T12:58:02.695Z] <<< [apiv2][body] GET https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET:getIamPolicy {"etag":"ACAB"}
+[debug] [2026-06-19T12:58:02.695Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:02.695Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:02.695Z] >>> [apiv2][query] POST https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET:setIamPolicy [none]
+[debug] [2026-06-19T12:58:02.695Z] >>> [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET:setIamPolicy {"policy":{"bindings":[{"role":"roles/secretmanager.secretAccessor","members":["serviceAccount:1085557656722-compute@developer.gserviceaccount.com"]}]},"updateMask":"bindings"}
+[debug] [2026-06-19T12:58:03.295Z] <<< [apiv2][status] POST https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET:setIamPolicy 200
+[debug] [2026-06-19T12:58:03.295Z] <<< [apiv2][body] POST https://secretmanager.googleapis.com/v1/projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET:setIamPolicy {"version":1,"etag":"BwZUmtfkV+Q=","bindings":[{"role":"roles/secretmanager.secretAccessor","members":["serviceAccount:1085557656722-compute@developer.gserviceaccount.com"]}]}
+[info] +  secretmanager: Granted roles/secretmanager.secretAccessor on projects/v-hit-vision/secrets/VHIT_WEBHOOK_SECRET to 1085557656722-compute@developer.gserviceaccount.com 
+[info] +  functions: ensured 1085557656722-compute@developer.gserviceaccount.com access to VHIT_WEBHOOK_SECRET. 
+[debug] [2026-06-19T12:58:03.297Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:03.297Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:03.297Z] >>> [apiv2][query] GET https://cloudbilling.googleapis.com/v1/projects/v-hit-vision/billingInfo [none]
+[debug] [2026-06-19T12:58:03.815Z] <<< [apiv2][status] GET https://cloudbilling.googleapis.com/v1/projects/v-hit-vision/billingInfo 200
+[debug] [2026-06-19T12:58:03.815Z] <<< [apiv2][body] GET https://cloudbilling.googleapis.com/v1/projects/v-hit-vision/billingInfo {"name":"projects/v-hit-vision/billingInfo","projectId":"v-hit-vision","billingAccountName":"billingAccounts/0143FD-EBF629-285B8A","billingEnabled":true}
+[debug] [2026-06-19T12:58:03.817Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:03.817Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:03.817Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/europe-west1/functions:generateUploadUrl [none]
+[debug] [2026-06-19T12:58:06.054Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/europe-west1/functions:generateUploadUrl 200
+[debug] [2026-06-19T12:58:06.055Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/europe-west1/functions:generateUploadUrl {"uploadUrl":"https://storage.googleapis.com/gcf-v2-uploads-1085557656722.europe-west1.cloudfunctions.appspot.com/754a1f0c-3b18-4277-b146-7f2ea4dc1e3d.zip?GoogleAccessId=service-1085557656722@gcf-admin-robot.iam.gserviceaccount.com&Expires=1781875686&Signature=Cmglu%2F0oQDotY%2B2BEq3VpMbj4s5lNjoC2Ut7TE%2B86Odpf%2B7VCyJgJwd8zG5u1oVcMbRwpIFQAAUtMLd3%2FrT%2Bzyvl2StA5Pjg57yjWkCXsm0afiBPnYKQ0mSvv0ISYxcwjUR6Ry4qySkm%2BV45YEQw674mf66OUIZIoUDL75EQI04kYSczaiJRUj0%2Bi5FX0tAZpw0IAIjnpDB0KzSFP3o8YTZzo4wxw7eOK2yQyEni1Vlo7%2BHyx0NBTgQEgQeJKElDCAw7Rb6G3vAIoAFErMgi2uVEO%2FOgek3UcbnZVXH7XW0wJFprNxTcEVrIERKfXLvsE1jZieoF2S8P1zFbA22t4Q%3D%3D","storageSource":{"bucket":"gcf-v2-uploads-1085557656722.europe-west1.cloudfunctions.appspot.com","object":"754a1f0c-3b18-4277-b146-7f2ea4dc1e3d.zip"}}
+[debug] [2026-06-19T12:58:06.055Z] >>> [apiv2][query] PUT https://storage.googleapis.com/gcf-v2-uploads-1085557656722.europe-west1.cloudfunctions.appspot.com/754a1f0c-3b18-4277-b146-7f2ea4dc1e3d.zip GoogleAccessId=service-1085557656722%40gcf-admin-robot.iam.gserviceaccount.com&Expires=1781875686&Signature=Cmglu%2F0oQDotY%2B2BEq3VpMbj4s5lNjoC2Ut7TE%2B86Odpf%2B7VCyJgJwd8zG5u1oVcMbRwpIFQAAUtMLd3%2FrT%2Bzyvl2StA5Pjg57yjWkCXsm0afiBPnYKQ0mSvv0ISYxcwjUR6Ry4qySkm%2BV45YEQw674mf66OUIZIoUDL75EQI04kYSczaiJRUj0%2Bi5FX0tAZpw0IAIjnpDB0KzSFP3o8YTZzo4wxw7eOK2yQyEni1Vlo7%2BHyx0NBTgQEgQeJKElDCAw7Rb6G3vAIoAFErMgi2uVEO%2FOgek3UcbnZVXH7XW0wJFprNxTcEVrIERKfXLvsE1jZieoF2S8P1zFbA22t4Q%3D%3D
+[debug] [2026-06-19T12:58:06.055Z] >>> [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-1085557656722.europe-west1.cloudfunctions.appspot.com/754a1f0c-3b18-4277-b146-7f2ea4dc1e3d.zip [stream]
+[debug] [2026-06-19T12:58:06.464Z] <<< [apiv2][status] PUT https://storage.googleapis.com/gcf-v2-uploads-1085557656722.europe-west1.cloudfunctions.appspot.com/754a1f0c-3b18-4277-b146-7f2ea4dc1e3d.zip 200
+[debug] [2026-06-19T12:58:06.464Z] <<< [apiv2][body] PUT https://storage.googleapis.com/gcf-v2-uploads-1085557656722.europe-west1.cloudfunctions.appspot.com/754a1f0c-3b18-4277-b146-7f2ea4dc1e3d.zip [omitted]
+[info] +  functions: functions source uploaded successfully 
+[info] i  functions: creating Node.js 24 (2nd Gen) function notifyAdminOnFeedbackCreated(europe-west1)... 
+[debug] [2026-06-19T12:58:06.469Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:06.469Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:06.469Z] >>> [apiv2][query] POST https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/europe-west1/functions functionId=notifyAdminOnFeedbackCreated
+[debug] [2026-06-19T12:58:06.469Z] >>> [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/europe-west1/functions {"name":"projects/v-hit-vision/locations/europe-west1/functions/notifyAdminOnFeedbackCreated","buildConfig":{"runtime":"nodejs24","entryPoint":"notifyAdminOnFeedbackCreated","source":{"storageSource":{"bucket":"gcf-v2-uploads-1085557656722.europe-west1.cloudfunctions.appspot.com","object":"754a1f0c-3b18-4277-b146-7f2ea4dc1e3d.zip"}},"environmentVariables":{"GOOGLE_NODE_RUN_SCRIPTS":""}},"serviceConfig":{"environmentVariables":{"ADMIN_PANEL_BASE_URL":"https://vhit-admin-panel.vercel.app","FIREBASE_CONFIG":"{\"projectId\":\"v-hit-vision\",\"storageBucket\":\"v-hit-vision.firebasestorage.app\"}","GCLOUD_PROJECT":"v-hit-vision","EVENTARC_CLOUD_EVENT_SOURCE":"projects/v-hit-vision/locations/europe-west1/services/notifyAdminOnFeedbackCreated","FUNCTION_SIGNATURE_TYPE":"cloudevent","FUNCTION_TARGET":"notifyAdminOnFeedbackCreated","LOG_EXECUTION_ID":"true"},"secretEnvironmentVariables":[{"key":"VHIT_WEBHOOK_SECRET","secret":"VHIT_WEBHOOK_SECRET","projectId":"v-hit-vision","version":"2"}],"ingressSettings":null,"timeoutSeconds":null,"serviceAccountEmail":null,"availableMemory":"256Mi","minInstanceCount":null,"maxInstanceCount":null,"maxInstanceRequestConcurrency":80,"availableCpu":"1","vpcConnector":null,"vpcConnectorEgressSettings":null,"directVpcNetworkInterface":null,"directVpcEgress":null},"labels":{"deployment-tool":"cli-firebase","firebase-functions-hash":"854bdcc7f1e385d5ee8e9761333dd62e75c475ca"},"eventTrigger":{"eventType":"google.cloud.firestore.document.v1.created","retryPolicy":"RETRY_POLICY_DO_NOT_RETRY","eventFilters":[{"attribute":"database","value":"(default)"},{"attribute":"namespace","value":"(default)"},{"attribute":"document","value":"feedbacks/{feedbackId}","operator":"match-path-pattern"}],"triggerRegion":"eur3"}}
+[debug] [2026-06-19T12:58:23.701Z] <<< [apiv2][status] POST https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/europe-west1/functions 400
+[debug] [2026-06-19T12:58:23.701Z] <<< [apiv2][body] POST https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/europe-west1/functions {"error":{"code":400,"message":"Validation failed for trigger projects/v-hit-vision/locations/eur3/triggers/notifyadminonfeedbackcreated-174094: Invalid resource state for \"\": Permission denied while using the Eventarc Service Agent. If you recently started to use Eventarc, it may take a few minutes before all necessary permissions are propagated to the Service Agent. Otherwise, verify that it has Eventarc Service Agent role.","status":"FAILED_PRECONDITION"}}
+[warn] !  functions: Request to https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/europe-west1/functions?functionId=notifyAdminOnFeedbackCreated had HTTP Error: 400, Validation failed for trigger projects/v-hit-vision/locations/eur3/triggers/notifyadminonfeedbackcreated-174094: Invalid resource state for "": Permission denied while using the Eventarc Service Agent. If you recently started to use Eventarc, it may take a few minutes before all necessary permissions are propagated to the Service Agent. Otherwise, verify that it has Eventarc Service Agent role. 
+[warn] !  functions: Since this is your first time using 2nd gen functions, we need a little bit longer to finish setting everything up. Retry the deployment in a few minutes. 
+[warn] !  functions:  failed to create function projects/v-hit-vision/locations/europe-west1/functions/notifyAdminOnFeedbackCreated 
+[error] Failed to create function projects/v-hit-vision/locations/europe-west1/functions/notifyAdminOnFeedbackCreated
+[warn] !  functions: Deploys failed. Skipping deletes. 
+[debug] [2026-06-19T12:58:23.706Z] Total Function Deployment time: 17236
+[debug] [2026-06-19T12:58:23.706Z] 1 Functions Deployed
+[debug] [2026-06-19T12:58:23.706Z] 1 Functions Errored
+[debug] [2026-06-19T12:58:23.706Z] 0 Function Deployments Aborted
+[debug] [2026-06-19T12:58:23.706Z] Average Function Deployment time: 17235
+[info] 
+[info] Functions deploy had errors with the following functions:
+	notifyAdminOnFeedbackCreated(europe-west1)
+[debug] [2026-06-19T12:58:23.916Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:23.916Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T12:58:23.916Z] >>> [apiv2][query] GET https://artifactregistry.googleapis.com/v1/projects/v-hit-vision/locations/europe-west1/repositories/gcf-artifacts [none]
+[debug] [2026-06-19T12:58:24.276Z] <<< [apiv2][status] GET https://artifactregistry.googleapis.com/v1/projects/v-hit-vision/locations/europe-west1/repositories/gcf-artifacts 404
+[debug] [2026-06-19T12:58:24.276Z] <<< [apiv2][body] GET https://artifactregistry.googleapis.com/v1/projects/v-hit-vision/locations/europe-west1/repositories/gcf-artifacts {"error":{"code":404,"message":"Requested entity was not found.","status":"NOT_FOUND"}}
+[debug] [2026-06-19T12:58:24.276Z] Failed to check artifact cleanup policy for region europe-west1: Request to https://artifactregistry.googleapis.com/v1/projects/v-hit-vision/locations/europe-west1/repositories/gcf-artifacts had HTTP Error: 404, Requested entity was not found. {"name":"FirebaseError","children":[],"context":{"body":{"error":{"code":404,"message":"Requested entity was not found.","status":"NOT_FOUND"}},"response":{"statusCode":404}},"exit":1,"message":"Request to https://artifactregistry.googleapis.com/v1/projects/v-hit-vision/locations/europe-west1/repositories/gcf-artifacts had HTTP Error: 404, Requested entity was not found.","status":404}
+[debug] [2026-06-19T12:58:24.277Z] Functions deploy failed.
+[debug] [2026-06-19T12:58:24.277Z] {
+  "endpoint": {
+    "id": "notifyAdminOnFeedbackCreated",
+    "project": "v-hit-vision",
+    "region": "europe-west1",
+    "entryPoint": "notifyAdminOnFeedbackCreated",
+    "platform": "gcfv2",
+    "runtime": "nodejs24",
+    "eventTrigger": {
+      "eventType": "google.cloud.firestore.document.v1.created",
+      "retry": false,
+      "eventFilters": {
+        "database": "(default)",
+        "namespace": "(default)"
+      },
+      "eventFilterPathPatterns": {
+        "document": "feedbacks/{feedbackId}"
+      },
+      "region": "eur3"
+    },
+    "labels": {
+      "deployment-tool": "cli-firebase"
+    },
+    "secretEnvironmentVariables": [
+      {
+        "key": "VHIT_WEBHOOK_SECRET",
+        "secret": "VHIT_WEBHOOK_SECRET",
+        "projectId": "v-hit-vision",
+        "version": "2"
+      }
+    ],
+    "serviceAccount": null,
+    "ingressSettings": null,
+    "availableMemoryMb": null,
+    "timeoutSeconds": null,
+    "maxInstances": null,
+    "minInstances": null,
+    "concurrency": 80,
+    "vpc": null,
+    "environmentVariables": {
+      "ADMIN_PANEL_BASE_URL": "https://vhit-admin-panel.vercel.app",
+      "FIREBASE_CONFIG": "{\"projectId\":\"v-hit-vision\",\"storageBucket\":\"v-hit-vision.firebasestorage.app\"}",
+      "GCLOUD_PROJECT": "v-hit-vision",
+      "EVENTARC_CLOUD_EVENT_SOURCE": "projects/v-hit-vision/locations/europe-west1/services/notifyAdminOnFeedbackCreated"
+    },
+    "codebase": "default",
+    "cpu": 1,
+    "targetedByOnly": true,
+    "hash": "854bdcc7f1e385d5ee8e9761333dd62e75c475ca"
+  },
+  "op": "create",
+  "original": {
+    "name": "FirebaseError",
+    "children": [],
+    "context": {
+      "function": "projects/v-hit-vision/locations/europe-west1/functions/notifyAdminOnFeedbackCreated"
+    },
+    "exit": 1,
+    "message": "Failed to create function projects/v-hit-vision/locations/europe-west1/functions/notifyAdminOnFeedbackCreated",
+    "original": {
+      "name": "FirebaseError",
+      "children": [],
+      "context": {
+        "body": {
+          "error": {
+            "code": 400,
+            "message": "Validation failed for trigger projects/v-hit-vision/locations/eur3/triggers/notifyadminonfeedbackcreated-174094: Invalid resource state for \"\": Permission denied while using the Eventarc Service Agent. If you recently started to use Eventarc, it may take a few minutes before all necessary permissions are propagated to the Service Agent. Otherwise, verify that it has Eventarc Service Agent role.",
+            "status": "FAILED_PRECONDITION"
+          }
+        },
+        "response": {
+          "statusCode": 400
+        }
+      },
+      "exit": 1,
+      "message": "Request to https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/europe-west1/functions?functionId=notifyAdminOnFeedbackCreated had HTTP Error: 400, Validation failed for trigger projects/v-hit-vision/locations/eur3/triggers/notifyadminonfeedbackcreated-174094: Invalid resource state for \"\": Permission denied while using the Eventarc Service Agent. If you recently started to use Eventarc, it may take a few minutes before all necessary permissions are propagated to the Service Agent. Otherwise, verify that it has Eventarc Service Agent role.",
+      "status": 400
+    },
+    "status": 400,
+    "code": 400
+  }
+}
+[debug] [2026-06-19T12:58:24.358Z] Error: Failed to create function notifyAdminOnFeedbackCreated in region europe-west1
+    at C:\Users\yusuf\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:332:27
+    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)
+    at async Fabricator.createV2Function (C:\Users\yusuf\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:311:30)
+    at async Fabricator.createEndpoint (C:\Users\yusuf\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:153:13)
+    at async Fabricator.wrapOperation (C:\Users\yusuf\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:138:13)
+    at async Promise.all (index 0)
+    at async Promise.allSettled (index 0)
+    at async Fabricator.applyPlan (C:\Users\yusuf\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\fabricator.js:77:45)
+    at async release (C:\Users\yusuf\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\functions\release\index.js:86:21)
+    at async chain (C:\Users\yusuf\AppData\Roaming\npm\node_modules\firebase-tools\lib\deploy\index.js:45:9)
+[error] 
+[error] Error: There was an error deploying functions
+[debug] [2026-06-19T13:00:26.002Z] ----------------------------------------------------------------------
+[debug] [2026-06-19T13:00:26.003Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\yusuf\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions:notifyAdminOnFeedbackCreated --project v-hit-vision
+[debug] [2026-06-19T13:00:26.004Z] CLI Version:   15.22.0
+[debug] [2026-06-19T13:00:26.004Z] Platform:      win32
+[debug] [2026-06-19T13:00:26.004Z] Node Version:  v22.20.0
+[debug] [2026-06-19T13:00:26.004Z] Detected Agent: unknown
+[debug] [2026-06-19T13:00:26.004Z] Time:          Fri Jun 19 2026 16:00:26 GMT+0300 (GMT+03:00)
+[debug] [2026-06-19T13:00:26.004Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2026-06-19T13:00:26.974Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-19T13:00:26.975Z] > authorizing via signed-in user (vhitvision@gmail.com)
+[debug] [2026-06-19T13:00:26.975Z] [iam] checking project v-hit-vision for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2026-06-19T13:00:26.975Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:26.975Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:26.976Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions [none]
+[debug] [2026-06-19T13:00:26.976Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions  x-goog-user-project=v-hit-vision
+[debug] [2026-06-19T13:00:26.977Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2026-06-19T13:00:27.947Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions 200
+[debug] [2026-06-19T13:00:27.947Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2026-06-19T13:00:27.947Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:27.947Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:27.947Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/v-hit-vision/serviceAccounts/v-hit-vision@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2026-06-19T13:00:27.947Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/v-hit-vision/serviceAccounts/v-hit-vision@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2026-06-19T13:00:28.857Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/v-hit-vision/serviceAccounts/v-hit-vision@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2026-06-19T13:00:28.857Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/v-hit-vision/serviceAccounts/v-hit-vision@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'v-hit-vision'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run build
+[info] +  functions: Finished running predeploy script. 
+[debug] [2026-06-19T13:00:31.169Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:31.169Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:31.169Z] >>> [apiv2][query] GET https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision [none]
+[debug] [2026-06-19T13:00:31.409Z] <<< [apiv2][status] GET https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision 200
+[debug] [2026-06-19T13:00:31.409Z] <<< [apiv2][body] GET https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision {"projectNumber":"1085557656722","projectId":"v-hit-vision","lifecycleState":"ACTIVE","name":"v-HIT Vision","labels":{"firebase":"enabled","firebase-core":"disabled"},"createTime":"2026-04-13T10:46:02.406Z"}
+[info] i  functions: preparing codebase default for deployment 
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled... 
+[info] i  functions: ensuring required API cloudbuild.googleapis.com is enabled... 
+[info] i  artifactregistry: ensuring required API artifactregistry.googleapis.com is enabled... 
+[debug] [2026-06-19T13:00:31.411Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:31.411Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:31.411Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/v-hit-vision/adminSdkConfig [none]
+[debug] [2026-06-19T13:00:32.020Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/v-hit-vision/adminSdkConfig 200
+[debug] [2026-06-19T13:00:32.020Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/v-hit-vision/adminSdkConfig {"projectId":"v-hit-vision","storageBucket":"v-hit-vision.firebasestorage.app"}
+[debug] [2026-06-19T13:00:32.022Z] Validating nodejs source
+[debug] [2026-06-19T13:00:32.600Z] > [functions] package.json contents: {
+  "name": "functions",
+  "scripts": {
+    "build": "tsc",
+    "build:watch": "tsc --watch",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "24"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "firebase-admin": "^13.6.0",
+    "firebase-functions": "^7.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^6.0.0",
+    "firebase-functions-test": "^3.4.1"
+  },
+  "private": true
+}
+[debug] [2026-06-19T13:00:32.600Z] Building nodejs source
+[info] i  functions: Loading and analyzing source code for codebase default to determine what to deploy 
+[debug] [2026-06-19T13:00:32.601Z] Could not find functions.yaml. Must use http discovery
+[debug] [2026-06-19T13:00:32.605Z] Found firebase-functions binary at 'C:\Users\yusuf\Documents\staj_flutter_apps\vhit-admin-panel\functions\node_modules\.bin\firebase-functions'
+[info] Serving at port 8045
+
+[debug] [2026-06-19T13:00:32.994Z] Got response from /__/functions.yaml {"endpoints":{"notifyAdminOnFeedbackCreated":{"availableMemoryMb":null,"timeoutSeconds":null,"minInstances":null,"maxInstances":null,"ingressSettings":null,"concurrency":null,"serviceAccountEmail":null,"vpc":null,"platform":"gcfv2","secretEnvironmentVariables":[{"key":"VHIT_WEBHOOK_SECRET"}],"labels":{},"eventTrigger":{"eventType":"google.cloud.firestore.document.v1.created","eventFilters":{"database":"(default)","namespace":"(default)"},"eventFilterPathPatterns":{"document":"feedbacks/{feedbackId}"},"retry":false},"entryPoint":"notifyAdminOnFeedbackCreated"}},"specVersion":"v1alpha1","requiredAPIs":[],"extensions":{},"params":[{"name":"ADMIN_PANEL_BASE_URL","type":"string"},{"type":"secret","name":"VHIT_WEBHOOK_SECRET"}]}
+[debug] [2026-06-19T13:00:37.038Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:37.038Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:37.038Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v1/projects/v-hit-vision/locations/-/functions [none]
+[debug] [2026-06-19T13:00:37.790Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v1/projects/v-hit-vision/locations/-/functions 200
+[debug] [2026-06-19T13:00:37.790Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v1/projects/v-hit-vision/locations/-/functions {}
+[debug] [2026-06-19T13:00:37.791Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:37.791Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:37.791Z] >>> [apiv2][query] GET https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/-/functions filter=environment%3D%22GEN_2%22
+[debug] [2026-06-19T13:00:38.888Z] <<< [apiv2][status] GET https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/-/functions 200
+[debug] [2026-06-19T13:00:38.888Z] <<< [apiv2][body] GET https://cloudfunctions.googleapis.com/v2/projects/v-hit-vision/locations/-/functions {}
+[info] i  extensions: ensuring required API firebaseextensions.googleapis.com is enabled... 
+[debug] [2026-06-19T13:00:38.889Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2026-06-19T13:00:38.889Z] > authorizing via signed-in user (vhitvision@gmail.com)
+[debug] [2026-06-19T13:00:38.889Z] [iam] checking project v-hit-vision for permissions ["firebase.projects.get","firebaseextensions.instances.list"]
+[debug] [2026-06-19T13:00:38.889Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:38.889Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:38.890Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions [none]
+[debug] [2026-06-19T13:00:38.890Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions  x-goog-user-project=v-hit-vision
+[debug] [2026-06-19T13:00:38.890Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2026-06-19T13:00:39.833Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions 200
+[debug] [2026-06-19T13:00:39.833Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/v-hit-vision:testIamPermissions {"permissions":["firebase.projects.get","firebaseextensions.instances.list"]}
+[debug] [2026-06-19T13:00:39.833Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:39.834Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:39.834Z] >>> [apiv2][query] GET https://firebaseextensions.googleapis.com/v1beta/projects/v-hit-vision/instances pageSize=100&pageToken=
+[debug] [2026-06-19T13:00:40.918Z] <<< [apiv2][status] GET https://firebaseextensions.googleapis.com/v1beta/projects/v-hit-vision/instances 200
+[debug] [2026-06-19T13:00:40.918Z] <<< [apiv2][body] GET https://firebaseextensions.googleapis.com/v1beta/projects/v-hit-vision/instances {}
+[info] i  functions: Loaded environment variables from .env. 
+[debug] [2026-06-19T13:00:40.920Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:40.920Z] Checked if tokens are valid: true, expires at: 1781877422965
+[debug] [2026-06-19T13:00:40.920Z] >>> [apiv2][query] GET https://firestore.googleapis.com/v1/projects/v-hit-vision/databases/(default) [none]
