@@ -69,29 +69,46 @@ function buildPayload(to: string, body: string) {
    * WHATSAPP_TEMPLATE_NAME doluysa otomatik template mesaj gönderilir.
    */
   if (templateName) {
-    return {
-      messaging_product: "whatsapp",
-      to,
-      type: "template",
-      template: {
-        name: templateName,
-        language: {
-          code: templateLanguage,
-        },
-        components: [
+  const template: {
+    name: string;
+    language: {
+      code: string;
+    };
+    components?: {
+      type: "body";
+      parameters: {
+        type: "text";
+        text: string;
+      }[];
+    }[];
+  } = {
+    name: templateName,
+    language: {
+      code: templateLanguage,
+    },
+  };
+
+  if (templateName !== "hello_world") {
+    template.components = [
+      {
+        type: "body",
+        parameters: [
           {
-            type: "body",
-            parameters: [
-              {
-                type: "text",
-                text: truncate(sanitizeTemplateText(body), 950),
-              },
-            ],
+            type: "text",
+            text: truncate(sanitizeTemplateText(body), 950),
           },
         ],
       },
-    };
+    ];
   }
+
+  return {
+    messaging_product: "whatsapp",
+    to,
+    type: "template",
+    template,
+  };
+}
 
   return {
     messaging_product: "whatsapp",
