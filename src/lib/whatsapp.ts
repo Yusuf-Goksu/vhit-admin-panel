@@ -32,6 +32,13 @@ function truncate(value: string, maxLength: number) {
   return `${value.slice(0, maxLength - 3)}...`;
 }
 
+function sanitizeTemplateText(value: string) {
+  return value
+    .replace(/[\r\n\t]+/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
+
 function getWhatsAppConfig() {
   const accessToken = process.env.WHATSAPP_ACCESS_TOKEN;
   const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID;
@@ -77,7 +84,7 @@ function buildPayload(to: string, body: string) {
             parameters: [
               {
                 type: "text",
-                text: truncate(body, 950),
+                text: truncate(sanitizeTemplateText(body), 950),
               },
             ],
           },
