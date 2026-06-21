@@ -11,6 +11,8 @@ type FeedbackData = {
   userFullName?: string;
   userEmail?: string;
   clinicId?: string;
+  clinicName?: string;
+  clinicTitle?: string;
   type?: string;
   subject?: string;
   message?: string;
@@ -22,14 +24,27 @@ type FeedbackData = {
   whatsappAdminNotifiedAt?: unknown;
 };
 
-function truncate(value: string, maxLength: number) {
-  if (value.length <= maxLength) return value;
+function oneLine(value: unknown, fallback = "-") {
+  const text = String(value ?? "").trim();
 
-  return `${value.slice(0, maxLength - 3)}...`;
+  if (!text) return fallback;
+
+  return text
+    .replace(/[\r\n\t]+/g, " ")
+    .replace(/\s{2,}/g, " ")
+    .trim();
 }
 
-function priorityLabel(priority?: string) {
-  switch (priority) {
+function shortText(value: unknown, maxLength = 90) {
+  const text = oneLine(value);
+
+  if (text.length <= maxLength) return text;
+
+  return `${text.slice(0, maxLength - 3)}...`;
+}
+
+function priorityLabel(value: unknown) {
+  switch (String(value ?? "").toLowerCase()) {
     case "high":
       return "Yüksek";
     case "normal":
@@ -37,12 +52,12 @@ function priorityLabel(priority?: string) {
     case "low":
       return "Düşük";
     default:
-      return priority || "-";
+      return "Belirtilmemiş";
   }
 }
 
-function typeLabel(type?: string) {
-  switch (type) {
+function typeLabel(value: unknown) {
+  switch (String(value ?? "").toLowerCase()) {
     case "bug":
       return "Hata";
     case "suggestion":
@@ -60,7 +75,7 @@ function typeLabel(type?: string) {
     case "other":
       return "Diğer";
     default:
-      return type || "-";
+      return "Geri bildirim";
   }
 }
 
@@ -68,9 +83,7 @@ function buildFeedbackUrl(feedbackId: string) {
   const baseUrl =
     process.env.ADMIN_PANEL_BASE_URL ??
     process.env.NEXT_PUBLIC_APP_URL ??
-    "";
-
-  if (!baseUrl) return "";
+    "https://vhit-admin-panel.vercel.app";
 
   return `${baseUrl.replace(/\/$/, "")}/dashboard/feedbacks/${feedbackId}`;
 }
@@ -78,28 +91,35 @@ function buildFeedbackUrl(feedbackId: string) {
 function buildFeedbackMessage(feedbackId: string, data: FeedbackData) {
   const panelUrl = buildFeedbackUrl(feedbackId);
 
+  const ticketCode = oneLine(data.ticketCode, feedbackId);
+  const priority = priorityLabel(data.priority);
+  const type = typeLabel(data.type);
+
+  const doctorName =
+    oneLine(data.userFullName) !== "-"
+      ? oneLine(data.userFullName)
+      : oneLine(data.userEmail, "Bilinmiyor");
+
+  const clinicName =
+    oneLine(data.clinicName) !== "-"
+      ? oneLine(data.clinicName)
+      : oneLine(data.clinicTitle) !== "-"
+      ? oneLine(data.clinicTitle)
+      : oneLine(data.clinicId, "Belirtilmemiş");
+
+  const subject = shortText(data.subject, 80);
+  const message = shortText(data.message, 120);
+
   return [
-    "🔔 Yeni destek talebi geldi",
-    "",
-    `Kod: ${data.ticketCode || feedbackId}`,
-    `Konu: ${data.subject || "Konu yok"}`,
-    `Tür: ${typeLabel(data.type)}`,
-    `Öncelik: ${priorityLabel(data.priority)}`,
-    "",
-    `Kullanıcı: ${data.userFullName || "-"}`,
-    `E-posta: ${data.userEmail || "-"}`,
-    `Klinik ID: ${data.clinicId || "-"}`,
-    "",
-    `Platform: ${data.platform || "-"}`,
-    `Cihaz: ${data.deviceModel || "-"}`,
-    `App: ${data.appVersion || "-"}`,
-    "",
-    `Mesaj: ${truncate(data.message || "-", 500)}`,
-    panelUrl ? "" : null,
-    panelUrl ? `Panel: ${panelUrl}` : null,
-  ]
-    .filter(Boolean)
-    .join("\n");
+    `Ticket: ${ticketCode}`,
+    `Öncelik: ${priority}`,
+    `Tür: ${type}`,
+    `Doktor: ${doctorName}`,
+    `Klinik: ${clinicName}`,
+    `Konu: ${subject}`,
+    `Mesaj: ${message}`,
+    `Panel: ${panelUrl}`,
+  ].join(" | ");
 }
 
 export async function POST(request: NextRequest) {
@@ -147,6 +167,7 @@ export async function POST(request: NextRequest) {
     const whatsappResult = await sendWhatsAppToAdmins(message);
 
     const successCount = whatsappResult.results.filter((item) => item.ok).length;
+
     const status = !whatsappResult.enabled
       ? "skipped"
       : successCount > 0
@@ -195,3 +216,4 @@ export async function POST(request: NextRequest) {
     );
   }
 }
+
