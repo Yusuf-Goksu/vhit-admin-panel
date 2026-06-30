@@ -21,6 +21,8 @@ export type FeedbackItem = {
   clinicId: string;
   userEmail: string;
   userFullName: string;
+  userPhone?: string | null;
+  phone?: string | null;
 
   type: FeedbackType;
   subject: string;

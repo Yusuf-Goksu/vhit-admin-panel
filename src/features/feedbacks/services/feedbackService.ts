@@ -1,18 +1,14 @@
 import {
-  addDoc,
   collection,
   doc,
   getDoc,
   getDocs,
-  increment,
   onSnapshot,
   orderBy,
   query,
-  serverTimestamp,
-  updateDoc,
-  writeBatch,
 } from "firebase/firestore";
 
+import { adminFetch } from "@/lib/admin-api";
 import { db } from "@/lib/firebase";
 import { FeedbackItem, FeedbackMessage, FeedbackStatus } from "../types/feedback";
 
@@ -38,6 +34,28 @@ export async function getFeedbackById(id: string): Promise<FeedbackItem | null> 
   };
 }
 
+export type FeedbackUserContact = {
+  fullName: string;
+  email: string;
+  phone: string;
+};
+
+export async function getFeedbackUserContact(userId: string): Promise<FeedbackUserContact | null> {
+  if (!userId) return null;
+
+  const snapshot = await getDoc(doc(db, "users", userId));
+
+  if (!snapshot.exists()) return null;
+
+  const data = snapshot.data() as Record<string, unknown>;
+
+  return {
+    fullName: String(data.fullName ?? data.displayName ?? ""),
+    email: String(data.email ?? ""),
+    phone: String(data.phone ?? data.phoneNumber ?? ""),
+  };
+}
+
 export function watchFeedbackMessages(
   feedbackId: string,
   callback: (messages: FeedbackMessage[]) => void
@@ -60,7 +78,6 @@ export function watchFeedbackMessages(
 
 export async function sendAdminMessage({
   feedbackId,
-  adminId,
   adminName,
   message,
 }: {
@@ -75,72 +92,55 @@ export async function sendAdminMessage({
     throw new Error("Mesaj boş olamaz.");
   }
 
-  const feedbackRef = doc(db, "feedbacks", feedbackId);
-  const messageRef = doc(collection(db, "feedbacks", feedbackId, "messages"));
-
-  const batch = writeBatch(db);
-
-  batch.set(messageRef, {
-  senderId: adminId,
-  senderName: "v-HIT Destek",
-  senderRole: "admin",
-  message: trimmedMessage,
-  attachmentUrl: null,
-  attachmentPath: null,
-  attachmentFileName: null,
-  attachmentContentType: null,
-  createdAt: serverTimestamp(),
-});
-
-  batch.update(feedbackRef, {
-    lastMessage: trimmedMessage,
-    lastMessageAt: serverTimestamp(),
-    lastMessageSenderRole: "admin",
-    unreadForUser: true,
-    unreadForAdmin: false,
-    messageCount: increment(1),
-    status: "reviewing",
-    updatedAt: serverTimestamp(),
+  await adminFetch("/api/admin/feedbacks/send-message", {
+    body: {
+      feedbackId,
+      adminName,
+      message: trimmedMessage,
+    },
   });
-
-  await batch.commit();
 }
 
 export async function updateFeedbackStatus(
   feedbackId: string,
   status: FeedbackStatus
 ) {
-  const payload: Record<string, any> = {
-    status,
-    updatedAt: serverTimestamp(),
-  };
-
-  if (status === "resolved") {
-    payload.resolvedAt = serverTimestamp();
-    payload.closedAt = null;
-  } else if (status === "closed") {
-    payload.closedAt = serverTimestamp();
-  } else {
-    payload.resolvedAt = null;
-    payload.closedAt = null;
-  }
-
-  await updateDoc(doc(db, "feedbacks", feedbackId), payload);
+  await adminFetch("/api/admin/feedbacks/update-status", {
+    body: {
+      feedbackId,
+      status,
+    },
+  });
 }
 
 export async function updateFeedbackAdminNote(
   feedbackId: string,
   adminNote: string
 ) {
-  await updateDoc(doc(db, "feedbacks", feedbackId), {
-    adminNote: adminNote.trim(),
-    updatedAt: serverTimestamp(),
+  await adminFetch("/api/admin/feedbacks/update-note", {
+    body: {
+      feedbackId,
+      adminNote,
+    },
   });
 }
 
 export async function markFeedbackAsReadByAdmin(feedbackId: string) {
-  await updateDoc(doc(db, "feedbacks", feedbackId), {
-    unreadForAdmin: false,
-    updatedAt: serverTimestamp(),
+  await adminFetch("/api/admin/feedbacks/mark-read", {
+    body: {
+      feedbackId,
+    },
+  });
+}
+
+export async function deleteFeedbackMessage(feedbackId: string, messageId: string) {
+  await adminFetch("/api/admin/feedbacks/delete-message", {
+    body: { feedbackId, messageId },
+  });
+}
+
+export async function deleteFeedback(feedbackId: string) {
+  await adminFetch("/api/admin/feedbacks/delete", {
+    body: { feedbackId },
   });
 }

@@ -1,7 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
+import { FieldValue } from "firebase-admin/firestore";
+
+import { withAdminAuth } from "@/lib/api-route-auth";
 import { adminAuth, adminDb } from "@/lib/firebase-admin";
 
-export async function POST(request: NextRequest) {
+export const POST = withAdminAuth(async (request: NextRequest) => {
   try {
     const body = await request.json();
 
@@ -31,11 +34,17 @@ export async function POST(request: NextRequest) {
       displayName: fullName,
     });
 
+    await adminAuth.setCustomUserClaims(doctorId, {
+      role: "doctor",
+      clinicId,
+      isActive: true,
+    });
+
     await adminDb.collection("users").doc(doctorId).update({
       fullName,
       email,
       clinicId,
-      updatedAt: new Date(),
+      updatedAt: FieldValue.serverTimestamp(),
     });
 
     return NextResponse.json({
@@ -52,4 +61,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

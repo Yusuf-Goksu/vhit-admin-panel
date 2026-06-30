@@ -1,0 +1,125 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function userRole() {
+      return request.auth.token.role;
+    }
+
+    function userClinicId() {
+      return request.auth.token.clinicId;
+    }
+
+    function isActiveUser() {
+      return request.auth.token.isActive != false;
+    }
+
+    function isSuperAdmin() {
+      return isSignedIn()
+        && isActiveUser()
+        && userRole() == 'super_admin';
+    }
+
+    function isDoctor() {
+      return isSignedIn()
+        && isActiveUser()
+        && userRole() == 'doctor';
+    }
+
+    function belongsToClinic(clinicId) {
+      return isDoctor() && userClinicId() == clinicId;
+    }
+
+    match /users/{userId} {
+      allow read: if isSuperAdmin()
+        || (isSignedIn() && request.auth.uid == userId);
+
+      allow create, update, delete: if false;
+    }
+
+    match /clinics/{clinicId} {
+      allow read: if isSuperAdmin()
+        || (isDoctor() && userClinicId() == clinicId);
+
+      allow create, update, delete: if false;
+    }
+
+    match /patients/{patientId} {
+      allow read: if isSuperAdmin()
+        || (isDoctor() && resource.data.clinicId == userClinicId());
+
+      allow create: if isDoctor()
+        && request.resource.data.clinicId == userClinicId();
+
+      allow update: if isDoctor()
+        && resource.data.clinicId == userClinicId()
+        && request.resource.data.clinicId == userClinicId();
+
+      allow delete: if false;
+    }
+
+    match /tests/{testId} {
+      allow read: if isSuperAdmin()
+        || (isDoctor() && resource.data.clinicId == userClinicId());
+
+      allow create: if isDoctor()
+        && request.resource.data.clinicId == userClinicId();
+
+      allow update: if isDoctor()
+        && resource.data.clinicId == userClinicId()
+        && request.resource.data.clinicId == userClinicId();
+
+      allow delete: if false;
+    }
+
+    match /appointments/{appointmentId} {
+      allow read: if isSuperAdmin()
+        || (isDoctor() && resource.data.clinicId == userClinicId());
+
+      allow create: if isDoctor()
+        && request.resource.data.clinicId == userClinicId();
+
+      allow update: if isDoctor()
+        && resource.data.clinicId == userClinicId()
+        && request.resource.data.clinicId == userClinicId();
+
+      allow delete: if false;
+    }
+
+    match /feedbacks/{feedbackId} {
+      allow read: if isSuperAdmin()
+        || (isSignedIn() && resource.data.userId == request.auth.uid);
+
+      allow create: if isSignedIn()
+        && request.resource.data.userId == request.auth.uid;
+
+      allow update: if isSuperAdmin()
+        || (isSignedIn() && resource.data.userId == request.auth.uid);
+
+      allow delete: if false;
+
+      match /messages/{messageId} {
+        allow read: if isSuperAdmin()
+          || (isSignedIn()
+            && get(/databases/$(database)/documents/feedbacks/$(feedbackId)).data.userId == request.auth.uid);
+
+        allow create: if isSuperAdmin()
+          || (isSignedIn()
+            && get(/databases/$(database)/documents/feedbacks/$(feedbackId)).data.userId == request.auth.uid
+            && request.resource.data.senderId == request.auth.uid
+            && request.resource.data.senderRole == 'user');
+
+        allow update, delete: if false;
+      }
+    }
+
+    match /admin_audit_logs/{logId} {
+      allow read: if isSuperAdmin();
+      allow create, update, delete: if false;
+    }
+  }
+}

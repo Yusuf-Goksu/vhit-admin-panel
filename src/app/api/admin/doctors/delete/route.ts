@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
+
+import { withAdminAuth } from "@/lib/api-route-auth";
 import { adminAuth, adminDb } from "@/lib/firebase-admin";
 
-export async function POST(request: NextRequest) {
+export const POST = withAdminAuth(async (request: NextRequest) => {
   try {
     const body = await request.json();
     const doctorId = String(body.doctorId ?? "").trim();
@@ -34,4 +36,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});

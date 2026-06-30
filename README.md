@@ -1,36 +1,118 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# v-HIT Admin Panel
 
-## Getting Started
+v-HIT mobil uygulaması için Firebase tabanlı Next.js admin paneli.
 
-First, run the development server:
+## Özellikler
+
+- Dashboard metrikleri ve son aktivite özeti
+- Doktor, klinik, hasta, test, randevu ve geri bildirim yönetimi
+- httpOnly session cookie ile güvenli admin oturumu
+- Sunucu tarafı API + Admin SDK ile korumalı mutasyonlar
+- Cursor tabanlı pagination ve sunucu tarafı filtreleme
+- Audit log (admin işlem geçmişi)
+- CSV export (hasta / test)
+
+## Gereksinimler
+
+- Node.js 20+
+- Firebase projesi (Auth + Firestore)
+- `super_admin` rolüne sahip admin kullanıcı
+
+## Kurulum
+
+```bash
+npm install
+cp .env.example .env.local
+```
+
+`.env.local` dosyasını Firebase projenize göre doldurun.
+
+Firestore kuralları ve index'ler:
+
+```bash
+npx firebase deploy --only firestore:rules,firestore:indexes
+```
+
+Geliştirme sunucusu:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Uygulama: [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Komutlar
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| Komut | Açıklama |
+|-------|----------|
+| `npm run dev` | Geliştirme sunucusu |
+| `npm run build` | Production build |
+| `npm run start` | Production sunucu |
+| `npm run lint` | ESLint |
+| `npm run typecheck` | TypeScript kontrolü |
+| `npm run test` | Unit testler (Vitest) |
 
-## Learn More
+## Mimari
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/                 # Next.js App Router (ince page wrapper'lar)
+├── features/            # Modül bazlı UI + servisler
+├── components/ui/       # Ortak UI kit
+├── lib/                 # Auth, API, audit, pagination, rate limit
+└── hooks/               # useAdminListQuery, usePagedQuery
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Güvenlik
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- `/dashboard/*` ve `/api/admin/*` middleware ile korunur
+- Tüm admin mutasyonları `withAdminAuth` + Firebase Admin SDK
+- Rate limit: admin API 120/dk, oturum oluşturma 10/dk (IP bazlı)
+- Firestore security rules: client yazımı kapalı, admin okuma kısıtlı
 
-## Deploy on Vercel
+### Health check
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Production izleme için:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```
+GET /api/health
+```
+
+## CI/CD
+
+GitHub Actions workflow (`.github/workflows/ci.yml`):
+
+1. `npm ci`
+2. `npm run lint`
+3. `npm run typecheck`
+4. `npm run test`
+5. `npm run build`
+
+## Production Deploy
+
+### Vercel (önerilen)
+
+1. Repoyu Vercel'e bağlayın
+2. Environment variable'ları `.env.example` ile aynı isimlerle ekleyin
+3. Build command: `npm run build`
+4. `FIREBASE_ADMIN_PRIVATE_KEY` değerinde `\n` kaçışlarını koruyun
+
+### Firebase App Hosting
+
+Firebase CLI ile App Hosting kullanıyorsanız proje Firebase skill dokümantasyonuna göre yapılandırın. Deploy öncesi mutlaka:
+
+```bash
+npm run build
+npx firebase deploy --only firestore:rules,firestore:indexes
+```
+
+## Operasyon Notları
+
+- Audit log koleksiyonu: `admin_audit_logs` (sadece super_admin okur)
+- Büyük listeler sunucu API'leri üzerinden sayfalanır
+- Rate limit tek instance için bellek içi çalışır; çoklu instance için Redis tabanlı limiter önerilir
+- Hata durumlarında `error.tsx` / `global-error.tsx` devreye girer
+
+## Lisans
+
+Private — v-HIT internal use.

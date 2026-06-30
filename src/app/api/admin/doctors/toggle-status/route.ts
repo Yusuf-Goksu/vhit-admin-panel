@@ -1,13 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
+import { FieldValue } from "firebase-admin/firestore";
+
+import { withAdminAuth } from "@/lib/api-route-auth";
 import { adminAuth, adminDb } from "@/lib/firebase-admin";
 
-export async function POST(request: NextRequest) {
+export const POST = withAdminAuth(async (request: NextRequest, admin) => {
   try {
     const body = await request.json();
 
     const doctorId = String(body.doctorId ?? "").trim();
     const isActive = Boolean(body.isActive);
-    const changedBy = body.changedBy ? String(body.changedBy) : null;
 
     if (!doctorId) {
       return NextResponse.json(
@@ -16,15 +18,32 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    const doctorSnap = await adminDb.collection("users").doc(doctorId).get();
+
+    if (!doctorSnap.exists) {
+      return NextResponse.json(
+        { message: "Doktor bulunamadı." },
+        { status: 404 }
+      );
+    }
+
+    const doctorData = doctorSnap.data() ?? {};
+
     await adminAuth.updateUser(doctorId, {
       disabled: !isActive,
     });
 
+    await adminAuth.setCustomUserClaims(doctorId, {
+      role: String(doctorData.role ?? "doctor"),
+      clinicId: String(doctorData.clinicId ?? ""),
+      isActive,
+    });
+
     await adminDb.collection("users").doc(doctorId).update({
       isActive,
-      lastStatusChangedBy: changedBy,
-      lastStatusChangedAt: new Date(),
-      updatedAt: new Date(),
+      lastStatusChangedBy: admin.uid,
+      lastStatusChangedAt: FieldValue.serverTimestamp(),
+      updatedAt: FieldValue.serverTimestamp(),
     });
 
     return NextResponse.json({
@@ -36,4 +55,4 @@ export async function POST(request: NextRequest) {
       { status: 500 }
     );
   }
-}
+});
