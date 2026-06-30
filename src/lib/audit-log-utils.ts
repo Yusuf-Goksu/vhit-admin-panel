@@ -38,6 +38,7 @@ export function extractResourceId(body: Record<string, unknown>) {
     "testId",
     "feedbackId",
     "messageId",
+    "taskId",
   ];
 
   for (const key of keys) {

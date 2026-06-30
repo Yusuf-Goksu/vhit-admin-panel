@@ -23,6 +23,9 @@ const actionLabels: Record<string, string> = {
   "feedbacks.mark-read": "Geri bildirim okundu",
   "feedbacks.delete-message": "Geri bildirim mesajı silindi",
   "feedbacks.delete": "Geri bildirim silindi",
+  "tasks.create": "Görev oluşturuldu",
+  "tasks.update": "Görev güncellendi",
+  "tasks.delete": "Görev silindi",
 };
 
 export function getAuditActionLabel(action: string) {

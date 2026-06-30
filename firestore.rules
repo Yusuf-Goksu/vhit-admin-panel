@@ -121,5 +121,10 @@ service cloud.firestore {
       allow read: if isSuperAdmin();
       allow create, update, delete: if false;
     }
+
+    match /admin_tasks/{taskId} {
+      allow read: if isSuperAdmin();
+      allow create, update, delete: if false;
+    }
   }
 }
