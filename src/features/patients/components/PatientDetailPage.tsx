@@ -66,12 +66,25 @@ export default function PatientDetailPage({ patientId }: { patientId: string }) 
   const [deletingTestId, setDeletingTestId] = useState<string | null>(null);
 
   useEffect(() => {
-    setIsLoading(true);
+    let cancelled = false;
 
-    adminFetch<PatientDetailResponse>(`/api/admin/patients/${patientId}`, { method: "GET" })
-      .then(setData)
-      .catch(() => showError("Hasta detayı yüklenemedi."))
-      .finally(() => setIsLoading(false));
+    void Promise.resolve()
+      .then(() =>
+        adminFetch<PatientDetailResponse>(`/api/admin/patients/${patientId}`, { method: "GET" })
+      )
+      .then((detail) => {
+        if (!cancelled) setData(detail);
+      })
+      .catch(() => {
+        if (!cancelled) showError("Hasta detayı yüklenemedi.");
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [patientId, showError]);
 
   async function handleDeleteTest(test: PatientDetailResponse["tests"][number]) {

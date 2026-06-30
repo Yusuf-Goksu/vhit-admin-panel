@@ -74,7 +74,6 @@ export default function AppointmentsPage() {
   const { confirm } = useConfirm();
   const { showSuccess, showError } = useToast();
 
-  const [appointments, setAppointments] = useState<Appointment[]>([]);
   const listQuery = useAdminListQuery<Appointment>("/api/admin/appointments/list");
   const [patients, setPatients] = useState<Patient[]>([]);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
@@ -156,30 +155,59 @@ export default function AppointmentsPage() {
   }
 
   useEffect(() => {
-    setInitialLoading(true);
+    let cancelled = false;
 
-    Promise.all([loadReferenceData(), listQuery.reload(buildFilters()), loadStats()])
-      .catch(() => showError("Randevular yüklenemedi."))
-      .finally(() => setInitialLoading(false));
+    void Promise.resolve()
+      .then(() =>
+        Promise.all([loadReferenceData(), listQuery.reload(buildFilters()), loadStats()])
+      )
+      .catch(() => {
+        if (!cancelled) showError("Randevular yüklenemedi.");
+      })
+      .finally(() => {
+        if (!cancelled) setInitialLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    listQuery.reload(buildFilters()).catch(() => showError("Randevu listesi güncellenemedi."));
+    let cancelled = false;
+
+    void Promise.resolve()
+      .then(() => listQuery.reload(buildFilters()))
+      .catch(() => {
+        if (!cancelled) showError("Randevu listesi güncellenemedi.");
+      });
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [clinicFilter, doctorFilter, statusFilter, dateFilter]);
 
   useEffect(() => {
-    setAppointments(listQuery.items);
-  }, [listQuery.items]);
-
-  useEffect(() => {
     if (viewMode !== "calendar") return;
-    loadCalendarData().catch(() => showError("Takvim verisi yüklenemedi."));
+
+    let cancelled = false;
+
+    void Promise.resolve()
+      .then(() => loadCalendarData())
+      .catch(() => {
+        if (!cancelled) showError("Takvim verisi yüklenemedi.");
+      });
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewMode, calendarMonth, clinicFilter, doctorFilter, statusFilter]);
 
   const isLoading = initialLoading || listQuery.isLoading;
+  const appointments = listQuery.items;
 
   const patientMap = useMemo(
     () => Object.fromEntries(patients.map((patient) => [patient.id, patient])),

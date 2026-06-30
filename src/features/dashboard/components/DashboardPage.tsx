@@ -103,9 +103,7 @@ export default function DashboardPage() {
   const [recentAuditLogs, setRecentAuditLogs] = useState<AuditLogItem[]>([]);
   const [isLoading, setIsLoading] = useState(true);
 
-  async function loadDashboard() {
-    setIsLoading(true);
-
+  async function fetchDashboard() {
     try {
       const thirtyDaysAgo = new Date();
       thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
@@ -191,13 +189,30 @@ export default function DashboardPage() {
       setRecentAuditLogs(auditResponse.items);
     } catch {
       showError("Dashboard verileri yüklenemedi.");
+    }
+  }
+
+  async function loadDashboard() {
+    setIsLoading(true);
+    try {
+      await fetchDashboard();
     } finally {
       setIsLoading(false);
     }
   }
 
   useEffect(() => {
-    loadDashboard();
+    let cancelled = false;
+
+    void Promise.resolve()
+      .then(() => fetchDashboard())
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

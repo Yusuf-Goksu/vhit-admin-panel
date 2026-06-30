@@ -31,9 +31,7 @@ export default function AuditLogsPage() {
   const [search, setSearch] = useState("");
   const [actionFilter, setActionFilter] = useState("");
 
-  async function loadPage(targetPage: number, cursor: string | null) {
-    setIsLoading(true);
-
+  async function fetchPageData(targetPage: number, cursor: string | null) {
     try {
       const response = await fetchAuditLogs({
         pageSize: DEFAULT_PAGE_SIZE,
@@ -53,13 +51,30 @@ export default function AuditLogsPage() {
       });
     } catch (error) {
       showError(error instanceof AdminApiError ? error.message : "Kayıtlar yüklenemedi.");
+    }
+  }
+
+  async function loadPage(targetPage: number, cursor: string | null) {
+    setIsLoading(true);
+    try {
+      await fetchPageData(targetPage, cursor);
     } finally {
       setIsLoading(false);
     }
   }
 
   useEffect(() => {
-    loadPage(1, null);
+    let cancelled = false;
+
+    void Promise.resolve()
+      .then(() => fetchPageData(1, null))
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

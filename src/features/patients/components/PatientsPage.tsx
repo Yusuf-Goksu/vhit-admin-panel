@@ -43,7 +43,6 @@ export default function PatientsPage() {
   const { confirm } = useConfirm();
   const { showSuccess, showError } = useToast();
 
-  const [patients, setPatients] = useState<Patient[]>([]);
   const [clinics, setClinics] = useState<ClinicOption[]>([]);
   const listQuery = useAdminListQuery<Patient>("/api/admin/patients/list");
   const [search, setSearch] = useState("");
@@ -75,24 +74,47 @@ export default function PatientsPage() {
   }, [search]);
 
   useEffect(() => {
-    setInitialLoading(true);
+    let cancelled = false;
 
-    Promise.all([fetchLookups().then((data) => setClinics(data.clinics)), listQuery.reload(buildFilters())])
-      .catch(() => showError("Hastalar yüklenemedi."))
-      .finally(() => setInitialLoading(false));
+    void Promise.resolve()
+      .then(() =>
+        Promise.all([
+          fetchLookups().then((data) => {
+            if (!cancelled) setClinics(data.clinics);
+          }),
+          listQuery.reload(buildFilters()),
+        ])
+      )
+      .catch(() => {
+        if (!cancelled) showError("Hastalar yüklenemedi.");
+      })
+      .finally(() => {
+        if (!cancelled) setInitialLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    listQuery.reload(buildFilters()).catch(() => showError("Hasta listesi güncellenemedi."));
+    let cancelled = false;
+
+    void Promise.resolve()
+      .then(() => listQuery.reload(buildFilters()))
+      .catch(() => {
+        if (!cancelled) showError("Hasta listesi güncellenemedi.");
+      });
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch, selectedClinic, showArchived]);
 
-  useEffect(() => {
-    setPatients(listQuery.items);
-  }, [listQuery.items]);
-
   const isLoading = initialLoading || listQuery.isLoading;
+  const patients = listQuery.items;
 
   const clinicMap = useMemo(
     () => Object.fromEntries(clinics.map((clinic) => [clinic.id, clinic.name])),

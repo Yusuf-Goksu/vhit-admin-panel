@@ -2,7 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { withAdminAuth } from "@/lib/api-route-auth";
 import { adminDb } from "@/lib/firebase-admin";
-import { DEFAULT_PAGE_SIZE } from "@/lib/pagination";
 import { parseOptionalString, parsePageSize } from "@/lib/server-list";
 
 export const GET = withAdminAuth(async (request: NextRequest) => {

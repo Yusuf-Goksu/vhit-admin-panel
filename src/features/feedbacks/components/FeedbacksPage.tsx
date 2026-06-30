@@ -79,16 +79,35 @@ export default function FeedbacksPage() {
   }, [search]);
 
   useEffect(() => {
-    setInitialLoading(true);
+    let cancelled = false;
 
-    Promise.all([listQuery.reload(buildFilters()), loadStats()])
-      .catch(() => showError("Geri bildirimler yüklenemedi."))
-      .finally(() => setInitialLoading(false));
+    void Promise.resolve()
+      .then(() => Promise.all([listQuery.reload(buildFilters()), loadStats()]))
+      .catch(() => {
+        if (!cancelled) showError("Geri bildirimler yüklenemedi.");
+      })
+      .finally(() => {
+        if (!cancelled) setInitialLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
-    listQuery.reload(buildFilters()).catch(() => showError("Liste güncellenemedi."));
+    let cancelled = false;
+
+    void Promise.resolve()
+      .then(() => listQuery.reload(buildFilters()))
+      .catch(() => {
+        if (!cancelled) showError("Liste güncellenemedi.");
+      });
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSearch, statusFilter, priorityFilter, typeFilter]);
 

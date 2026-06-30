@@ -4,6 +4,10 @@ import { FieldValue } from "firebase-admin/firestore";
 import { withAdminAuth } from "@/lib/api-route-auth";
 import { adminAuth, adminDb } from "@/lib/firebase-admin";
 
+function isAuthError(error: unknown): error is { code?: string } {
+  return typeof error === "object" && error !== null && "code" in error;
+}
+
 export const POST = withAdminAuth(async (request: NextRequest, admin) => {
   try {
     const body = await request.json();
@@ -66,11 +70,11 @@ export const POST = withAdminAuth(async (request: NextRequest, admin) => {
       id: userRecord.uid,
       message: "Doktor oluşturuldu.",
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     return NextResponse.json(
       {
         message:
-          error?.code === "auth/email-already-exists"
+          isAuthError(error) && error.code === "auth/email-already-exists"
             ? "Bu e-posta ile kayıtlı kullanıcı zaten var."
             : "Doktor oluşturulamadı.",
       },

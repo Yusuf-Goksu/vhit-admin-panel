@@ -55,7 +55,6 @@ export default function TestsPage() {
   const { confirm } = useConfirm();
   const { showSuccess, showError } = useToast();
 
-  const [tests, setTests] = useState<TestRecord[]>([]);
   const pagination = usePagedQuery<TestRecord>();
   const [patients, setPatients] = useState<Patient[]>([]);
   const [doctors, setDoctors] = useState<Doctor[]>([]);
@@ -152,19 +151,25 @@ export default function TestsPage() {
   }
 
   useEffect(() => {
-    setInitialLoading(true);
+    let cancelled = false;
 
-    Promise.all([loadReferenceData(), loadTests(1), loadStats()])
-      .catch(() => showError("Test kayıtları yüklenemedi."))
-      .finally(() => setInitialLoading(false));
+    void Promise.resolve()
+      .then(() => Promise.all([loadReferenceData(), loadTests(1), loadStats()]))
+      .catch(() => {
+        if (!cancelled) showError("Test kayıtları yüklenemedi.");
+      })
+      .finally(() => {
+        if (!cancelled) setInitialLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    setTests(pagination.items);
-  }, [pagination.items]);
-
   const isLoading = initialLoading || pagination.isLoading;
+  const tests = pagination.items;
   const filtersActive = Boolean(
     search.trim() || clinicFilter || doctorFilter || sourceFilter || dateFrom || dateTo
   );

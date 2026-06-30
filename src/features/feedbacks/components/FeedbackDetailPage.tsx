@@ -81,9 +81,7 @@ export default function FeedbackDetailPage({ feedbackId }: { feedbackId: string 
   const [adminNote, setAdminNote] = useState("");
   const [previewImage, setPreviewImage] = useState<{ src: string; alt: string } | null>(null);
 
-  async function loadFeedback() {
-    setIsLoading(true);
-
+  async function fetchFeedback() {
     try {
       const item = await getFeedbackById(feedbackId);
 
@@ -101,15 +99,33 @@ export default function FeedbackDetailPage({ feedbackId }: { feedbackId: string 
       await markFeedbackAsReadByAdmin(feedbackId);
     } catch {
       showError("Geri bildirim detayı yüklenemedi.");
+    }
+  }
+
+  async function loadFeedback() {
+    setIsLoading(true);
+    try {
+      await fetchFeedback();
     } finally {
       setIsLoading(false);
     }
   }
 
   useEffect(() => {
-    loadFeedback();
+    let cancelled = false;
+
+    void Promise.resolve()
+      .then(() => fetchFeedback())
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
     const unsubscribe = watchFeedbackMessages(feedbackId, setMessages);
-    return () => unsubscribe();
+
+    return () => {
+      cancelled = true;
+      unsubscribe();
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [feedbackId]);
 

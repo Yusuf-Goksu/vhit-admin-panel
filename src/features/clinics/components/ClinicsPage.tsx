@@ -44,7 +44,6 @@ export default function ClinicsPage() {
   const { confirm } = useConfirm();
   const { showSuccess, showError } = useToast();
 
-  const [clinics, setClinics] = useState<Clinic[]>([]);
   const pagination = usePagedQuery<Clinic>();
   const [search, setSearch] = useState("");
   const [formOpen, setFormOpen] = useState(false);
@@ -82,19 +81,25 @@ export default function ClinicsPage() {
   }
 
   useEffect(() => {
-    setInitialLoading(true);
+    let cancelled = false;
 
-    loadClinics(1)
-      .catch(() => showError("Klinikler yüklenemedi."))
-      .finally(() => setInitialLoading(false));
+    void Promise.resolve()
+      .then(() => loadClinics(1))
+      .catch(() => {
+        if (!cancelled) showError("Klinikler yüklenemedi.");
+      })
+      .finally(() => {
+        if (!cancelled) setInitialLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    setClinics(pagination.items);
-  }, [pagination.items]);
-
   const isLoading = initialLoading || pagination.isLoading;
+  const clinics = pagination.items;
   const filtersActive = Boolean(search.trim());
 
   const filtered = useMemo(() => {

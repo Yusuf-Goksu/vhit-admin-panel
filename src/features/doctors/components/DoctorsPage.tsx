@@ -56,7 +56,6 @@ export default function DoctorsPage() {
   const { confirm } = useConfirm();
   const { showSuccess, showError } = useToast();
 
-  const [doctors, setDoctors] = useState<Doctor[]>([]);
   const [clinics, setClinics] = useState<ClinicOption[]>([]);
   const pagination = usePagedQuery<Doctor>();
 
@@ -127,19 +126,25 @@ export default function DoctorsPage() {
   }
 
   useEffect(() => {
-    setInitialLoading(true);
+    let cancelled = false;
 
-    Promise.all([loadClinics(), loadDoctors(1)])
-      .catch(() => showError("Doktorlar yüklenemedi."))
-      .finally(() => setInitialLoading(false));
+    void Promise.resolve()
+      .then(() => Promise.all([loadClinics(), loadDoctors(1)]))
+      .catch(() => {
+        if (!cancelled) showError("Doktorlar yüklenemedi.");
+      })
+      .finally(() => {
+        if (!cancelled) setInitialLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    setDoctors(pagination.items);
-  }, [pagination.items]);
-
   const isLoading = initialLoading || pagination.isLoading;
+  const doctors = pagination.items;
   const filtersActive = Boolean(searchText.trim());
 
   const clinicNameById = useMemo(

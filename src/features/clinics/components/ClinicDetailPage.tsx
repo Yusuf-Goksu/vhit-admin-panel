@@ -22,12 +22,23 @@ export default function ClinicDetailPage({ clinicId }: { clinicId: string }) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    setIsLoading(true);
+    let cancelled = false;
 
-    fetchClinicDetail(clinicId)
-      .then(setData)
-      .catch(() => showError("Klinik detayı yüklenemedi."))
-      .finally(() => setIsLoading(false));
+    void Promise.resolve()
+      .then(() => fetchClinicDetail(clinicId))
+      .then((detail) => {
+        if (!cancelled) setData(detail);
+      })
+      .catch(() => {
+        if (!cancelled) showError("Klinik detayı yüklenemedi.");
+      })
+      .finally(() => {
+        if (!cancelled) setIsLoading(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
   }, [clinicId, showError]);
 
   if (isLoading) return <LoadingState rows={6} />;
